@@ -9,7 +9,6 @@ pairs.setup {
 -- disable mini.pairs for markdown files
 -- so that no extra ]s being inserted in links
 local f = function(args)
-  vim.b[args.buf].minipairs_disable = true
-  -- pairs.unmap_buf(0, "i", "", "[]")
+  vim.keymap.set("i", "[", "[", { buffer = args.buf })
 end
 vim.api.nvim_create_autocmd("Filetype", { pattern = "markdown", callback = f })
