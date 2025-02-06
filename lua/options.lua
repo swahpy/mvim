@@ -3,6 +3,8 @@ local o = vim.opt
 -- UI
 o.relativenumber = true
 o.scrolloff = 2
+o.winblend = 0
+
 
 -- editing
 o.tabstop = 2
