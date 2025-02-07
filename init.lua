@@ -86,6 +86,7 @@ later(load "mini.statusline")
 later(load("mini.surround", { n_lines = 500, respect_selection_type = true, search_method = "cover_or_next" }))
 later(load "mini.tabline")
 later(load "mini.trailspace")
+later(load "mini.visits")
 
 --> non-mini plugins <--
 -- arrow

@@ -100,6 +100,9 @@ map("n", "<leader>zz", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "zoom in/out buf
 -- mini.notify
 map("n", "<leader>nh", "<cmd>lua MiniNotify.show_history()<cr>", { desc = "show notification history" })
 map("n", "<leader>cn", "<cmd>lua MiniNotify.clear()<cr>", { desc = "remove all active notifications" })
+-- mini.visits
+map("n", "-", "<cmd>lua MiniVisits.add_label()<cr>", { desc = "Add label" })
+map("n", "<leader>-", "<cmd>lua MiniVisits.remove_label()<cr>", { desc = "Remove label" })
 
 --> non-mini plugins mappings <--
 map("n", "<leader>ut", "<cmd>UndotreeToggle<cr>", { desc = "Toggle undo tree" })
