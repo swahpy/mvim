@@ -18,17 +18,6 @@ end, { desc = "navigate to next buffer" })
 map("n", "<S-h>", function()
   vim.cmd "bprev"
 end, { desc = "navigate to previous buffer" })
-map("n", "<leader>bc", function()
-  local current_buf = vim.api.nvim_get_current_buf()
-  -- Get a list of all open buffers
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    -- Skip the current buffer and buffers that are unloaded or hidden
-    if buf ~= current_buf and vim.api.nvim_buf_is_loaded(buf) then
-      vim.api.nvim_buf_delete(buf, { force = false })
-    end
-  end
-  vim.cmd "redrawtabline"
-end, { desc = "close all buffers except current" })
 
 -- toggle checkbox
 local toggle_checkbox = function()

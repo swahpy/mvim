@@ -176,6 +176,10 @@ later(function()
   }
   require "plugins.rendermarkdown"
 end)
+later(function()
+  add { source = "folke/snacks.nvim" }
+  require "plugins.snack"
+end)
 -- markview
 -- later(function()
 --   add {
