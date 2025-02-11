@@ -176,9 +176,15 @@ later(function()
   }
   require "plugins.rendermarkdown"
 end)
+-- snacks
 later(function()
   add { source = "folke/snacks.nvim" }
   require "plugins.snack"
+end)
+-- multicursor
+later(function()
+  add { source = "jake-stewart/multicursor.nvim" }
+  require "plugins.multicursor"
 end)
 -- markview
 -- later(function()
