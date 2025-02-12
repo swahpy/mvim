@@ -79,6 +79,14 @@ map("n", "sp", function()
   MiniJump2d.start {
     ---@diagnostic disable-next-line: undefined-global
     spotter = MiniJump2d.gen_pattern_spotter "%p+",
+    hl_group = "Search",
+  }
+end)
+map("n", "sP", function()
+  ---@diagnostic disable-next-line: undefined-global
+  MiniJump2d.start {
+    ---@diagnostic disable-next-line: undefined-global
+    spotter = MiniJump2d.gen_pattern_spotter "%p+",
     allowed_lines = { cursor_before = false, cursor_after = false },
     allowed_windows = { not_current = false },
     hl_group = "Search",
