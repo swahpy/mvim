@@ -192,22 +192,20 @@ map(
   [[<cmd> ZkNew {dir = "journal", group = "journal", edit = true} <cr>]],
   { desc = "zk creates journal for today" }
 )
-map(
-  "v",
-  "<leader>zc",
-  [[<cmd> ZkNewFromTitleSelection {dir = "notes", edit = true} <cr>]],
-  { desc = "zk creates a note using selection as title" }
-)
+map("v", "<leader>zc", function()
+  local command = "'<,'>ZkNewFromTitleSelection {dir = 'notes'}"
+  vim.cmd(command)
+end, { desc = "zk creates a note using selection as title" })
 map("v", "<leader>zC", function()
   local title = vim.fn.input "Title: "
-  local cmd = "'<,'>ZkNewFromContentSelection {dir = 'notes', edit = true, title = '" .. title .. "' }"
-  vim.cmd(cmd)
-end, { desc = "zk creates a note using selection as title" })
-map("n", "<leader>zc", function()
+  local command = "'<,'>ZkNewFromContentSelection {dir = 'notes', title='" .. title .. "'}"
+  vim.cmd(command)
+end, { desc = "zk creates a note using selection as content" })
+map("n", "<leader>zn", function()
   local title = vim.fn.input "Title: "
   local command = "ZkNew {dir = 'notes', edit = true, title = '" .. title .. "'}"
   vim.cmd(command)
-end, { desc = "zk creates a note using selection as content" })
+end, { desc = "zk creates a note" })
 map(
   "v",
   "<leader>zm",
