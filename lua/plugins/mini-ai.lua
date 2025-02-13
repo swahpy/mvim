@@ -27,7 +27,7 @@ ai.setup {
     ["|"] = spec.pair("|", "|", { type = "non-balanced" }),
 
     -- class
-    c = spec.treesitter {
+    C = spec.treesitter {
       a = "@class.outer",
       i = "@class.inner",
     },
@@ -59,5 +59,6 @@ ai.setup {
     L = gen_ai_spec.line(),
     d = gen_ai_spec.number(),
     j = { "%f[^%c][^%c]*", "^%s*().-()%s*$" }, -- match whole line
+    c = { "%^%d+" }, -- match markdown link like [^1]
   },
 }

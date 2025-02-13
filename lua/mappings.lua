@@ -92,6 +92,14 @@ map("n", "sP", function()
     hl_group = "Search",
   }
 end)
+map("n", "sc", function()
+  ---@diagnostic disable-next-line: undefined-global
+  MiniJump2d.start {
+    ---@diagnostic disable-next-line: undefined-global
+    spotter = MiniJump2d.gen_pattern_spotter "%[%^%d%]",
+    hl_group = "Search",
+  }
+end)
 -- mini.misc
 map("n", "<leader>zz", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "zoom in/out buffer" })
 -- mini.notify
