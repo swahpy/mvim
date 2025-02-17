@@ -89,15 +89,6 @@ later(load "mini.trailspace")
 later(load "mini.visits")
 
 --> non-mini plugins <--
--- arrow
-later(function()
-  add { source = "otavioschwanck/arrow.nvim" }
-  require("arrow").setup {
-    show_icons = true,
-    leader_key = "-", -- Recommended to be a single key
-    buffer_leader_key = "m", -- Per Buffer Mappings
-  }
-end)
 -- lspsaga
 later(function()
   add {
