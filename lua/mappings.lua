@@ -73,7 +73,7 @@ map("n", "<leader>us", rhs, { desc = "stop showing current buffer in all windows
 -- mini.jump2d
 map("n", "sl", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.line_start)<CR>")
 map("n", "sw", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>")
-map("n", "ss", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>")
+map("n", "sc", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>")
 map("n", "sp", function()
   ---@diagnostic disable-next-line: undefined-global
   MiniJump2d.start {
@@ -92,7 +92,7 @@ map("n", "sP", function()
     hl_group = "Search",
   }
 end)
-map("n", "sc", function()
+map("n", "sC", function()
   ---@diagnostic disable-next-line: undefined-global
   MiniJump2d.start {
     ---@diagnostic disable-next-line: undefined-global
