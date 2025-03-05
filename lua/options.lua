@@ -17,7 +17,7 @@ o.swapfile = false
 o.foldmethod = "expr"
 o.foldexpr = "nvim_treesitter#foldexpr()"
 -- o.foldmethod = "indent" -- Set 'indent' folding method
-o.foldlevel = 1 -- Display all folds except top ones
+o.foldlevel = 99 -- Display all folds except top ones
 o.foldnestmax = 10 -- Create folds only for some number of nested levels
 vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 if vim.fn.has "nvim-0.10" == 1 then
