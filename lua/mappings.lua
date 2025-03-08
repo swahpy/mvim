@@ -5,7 +5,7 @@ map({ "n", "v" }, ";", ":", { desc = "CMD enter command mode" })
 map({ "n", "i", "v" }, "<A-w>", "<cmd> w <cr><Esc>")
 
 -- move
-map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
+map("i", "<C-a>", "<ESC>^i", { desc = "move beginning of line" })
 map("i", "<C-e>", "<End>", { desc = "move end of line" })
 
 map("n", "gb", "^", { desc = "move to beginning character of current line" })
