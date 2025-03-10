@@ -2,11 +2,6 @@ local snippets = require "mini.snippets"
 local gen_loader = snippets.gen_loader
 local map = vim.keymap.set
 
-local match_strict = function(snips)
-  -- Do not match with whitespace to cursor's left
-  return snippets.default_match(snips, { pattern_fuzzy = "%S+" })
-end
-
 snippets.setup {
   -- Array of snippets and loaders (see |snippets.config| for details).
   -- Nothing is defined by default. Add manually to have snippets to match.
@@ -21,9 +16,6 @@ snippets.setup {
 
   -- Module mappings. Use `''` (empty string) to disable one.
   mappings = { jump_next = "", jump_prev = "" },
-  expand = {
-    match = match_strict,
-  },
 }
 
 require("mini.deps").add {
