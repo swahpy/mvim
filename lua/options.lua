@@ -4,6 +4,7 @@ local o = vim.opt
 o.relativenumber = true
 o.scrolloff = 2
 o.winblend = 0
+o.wrap = true
 
 -- editing
 o.tabstop = 2
