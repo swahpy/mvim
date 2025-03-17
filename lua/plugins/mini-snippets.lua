@@ -24,14 +24,14 @@ require("mini.deps").add {
 require("neotab").setup()
 
 local loop_or_expand_or_jump = function()
-  local can_expand = #snippets.expand { insert = false } > 0
+  -- local can_expand = #snippets.expand { insert = false } > 0
   local is_active = snippets.session.get() ~= nil
 
   if vim.fn.pumvisible() == 1 then
     return "<C-n>"
-  elseif can_expand then
-    vim.schedule(snippets.expand)
-    return ""
+  -- elseif can_expand then
+  --   vim.schedule(snippets.expand)
+  --   return ""
   elseif is_active then
     snippets.session.jump "next"
     return ""
