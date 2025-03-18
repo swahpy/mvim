@@ -1,4 +1,10 @@
-require("mini.completion").setup {
+local completion = require "mini.completion"
+local opts = { filtersort = "fuzzy" }
+local process_items = function(items, base)
+  return completion.default_process_items(items, base, opts)
+end
+
+completion.setup {
   window = {
     info = { border = "double" },
     signature = { border = "double" },
@@ -6,6 +12,7 @@ require("mini.completion").setup {
   lsp_completion = {
     source_func = "omnifunc",
     auto_setup = false,
+    lsp_completion = { process_items = process_items },
   },
   mappings = {
     force_twostep = "<C-t>",
