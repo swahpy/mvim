@@ -26,6 +26,4 @@ map("n", "<leader>rs", function()
   end
 end, { desc = "remove a session" })
 map("n", "<leader>cs", [[<cmd>lua =vim.v.this_session<cr>]], { desc = "show current session" })
-map("n", "<leader>ls", function()
-  session.select()
-end, { desc = "select a session" })
+map("n", "<leader>ls", [[<cmd>lua MiniSessions.select()<cr>]], { desc = "show current session" })
