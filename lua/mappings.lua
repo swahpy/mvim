@@ -6,8 +6,6 @@ map({ "n", "i", "v" }, "<A-w>", "<cmd> w <cr><Esc>")
 
 map("n", "c", '"_c', { desc = "change without yanking" })
 map("n", "C", '"_C', { desc = "change without yanking" })
-map("n", "d", '"_d', { desc = "delete without yanking" })
-map("n", "D", '"_D', { desc = "delete without yanking" })
 
 -- move
 map("i", "<C-a>", "<ESC>^i", { desc = "move beginning of line" })
