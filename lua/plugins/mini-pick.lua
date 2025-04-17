@@ -105,25 +105,25 @@ end, { desc = "pick from lsp document_symbol" })
 -- visits
 map("n", "<leader>vr", function()
   extra.pickers.visit_paths { recency_weight = 1 }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from recent cwd visit_paths" })
 map("n", "<leader>vR", function()
   extra.pickers.visit_paths { recency_weight = 1, cwd = "" }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from recent global visit_paths" })
 map("n", "<leader>vf", function()
   extra.pickers.visit_paths { recency_weight = 0 }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from frequent cwd visit_paths" })
 map("n", "<leader>vF", function()
   extra.pickers.visit_paths { recency_weight = 0, cwd = "" }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from frequent global visit_paths" })
 map("n", "<leader>vc", function()
   extra.pickers.visit_paths { recency_weight = 0.5 }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from frecent cwd visit_paths" })
 map("n", "<leader>vC", function()
   extra.pickers.visit_paths { recency_weight = 0.5, cwd = "" }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from frecent global visit_paths" })
 map("n", "<leader>vl", function()
   extra.pickers.visit_labels {}
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from cwd labels" })
 map("n", "<leader>vL", function()
   extra.pickers.visit_labels { cwd = "" }
-end, { desc = "pick from.visit_paths document_symbol" })
+end, { desc = "pick from global labels" })
