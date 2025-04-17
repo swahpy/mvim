@@ -148,12 +148,19 @@ end)
 -- lspconfig
 later(function()
   add {
-    source = "neovim/nvim-lspconfig",
-    depends = { "williamboman/mason.nvim" },
+    source = "williamboman/mason.nvim",
   }
-  require "plugins.nvim-lspconfig"
+  require "plugins.lsp"
   require("mason").setup()
 end)
+-- later(function()
+--   add {
+--     source = "neovim/nvim-lspconfig",
+--     depends = { "williamboman/mason.nvim" },
+--   }
+--   require "plugins.nvim-lspconfig"
+--   require("mason").setup()
+-- end)
 -- toggleterm
 later(function()
   add { source = "akinsho/toggleterm.nvim" }
@@ -168,10 +175,10 @@ later(function()
   require "plugins.rendermarkdown"
 end)
 -- snacks
-later(function()
-  add { source = "folke/snacks.nvim" }
-  require "plugins.snack"
-end)
+-- later(function()
+--   add { source = "folke/snacks.nvim" }
+--   require "plugins.snack"
+-- end)
 -- multicursor
 later(function()
   add { source = "jake-stewart/multicursor.nvim" }

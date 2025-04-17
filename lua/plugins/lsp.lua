@@ -1,3 +1,4 @@
+-- https://github.com/neovim/nvim-lspconfig/tree/master/lsp
 local map = vim.keymap.set
 
 map("n", "<leader>ti", function()
@@ -32,16 +33,17 @@ local on_attach = function(args)
   end
 
   -- enable nvim completion
-  if client ~= nil and client:supports_method "textDocument/completion" then
-    vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-  end
+  -- if client ~= nil and client:supports_method "textDocument/completion" then
+  --   vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+  -- end
 end
 vim.api.nvim_create_autocmd("LspAttach", { callback = on_attach })
 
-vim.lsp.config("*", {
-  root_markers = { ".git" },
-})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local completion = require "mini.completion"
+capabilities = vim.tbl_deep_extend("force", capabilities, completion.get_lsp_capabilities())
+vim.lsp.config("*", { capabilities = capabilities })
 
-vim.lsp.set_log_level "WARN"
+vim.lsp.set_log_level "DEBUG"
 
-vim.lsp.enable { "luals", "basedpyright", "ruff" }
+vim.lsp.enable { "luals", "pyright", "ruff", "typoslsp" }
