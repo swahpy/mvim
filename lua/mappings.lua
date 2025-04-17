@@ -21,6 +21,12 @@ end, { desc = "navigate to next buffer" })
 map("n", "<S-h>", function()
   vim.cmd "bprev"
 end, { desc = "navigate to previous buffer" })
+map("n", "<A-1>", function()
+  vim.cmd "bfirst"
+end, { desc = "navigate to previous buffer" })
+map("n", "<A-0>", function()
+  vim.cmd "blast"
+end, { desc = "navigate to previous buffer" })
 
 -- toggle checkbox
 local toggle_checkbox = function()
