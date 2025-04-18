@@ -20,6 +20,7 @@ starter.setup {
     starter.sections.builtin_actions(),
     starter.sections.recent_files(6, false),
     starter.sections.recent_files(6, true),
+    starter.sections.pick(),
     starter.sections.sessions(6, true),
   },
   content_hooks = {

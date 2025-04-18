@@ -117,6 +117,31 @@ map("n", "<leader>cn", "<cmd>lua MiniNotify.clear()<cr>", { desc = "remove all a
 -- mini.visits
 map("n", "-", "<cmd>lua MiniVisits.add_label()<cr>", { desc = "Add label" })
 map("n", "<leader>-", "<cmd>lua MiniVisits.remove_label()<cr>", { desc = "Remove label" })
+-- mini.sessions
+local session = require "mini.sessions"
+map("n", "<leader>rs", function()
+  local sessions = {}
+  local keystr = ""
+  local n = 0
+  for k, _ in pairs(session.detected) do
+    n = n + 1
+    sessions[n] = k
+    keystr = keystr .. n .. ": " .. k .. "\n"
+  end
+  local numstr =
+    vim.fn.input("Below are current sessions, please select the one to delete(1/2/...):\n" .. keystr .. "\n> ")
+  if numstr == "" then
+    return
+  end
+  local num = tonumber(numstr)
+  if num <= n then
+    session.delete(sessions[num])
+  else
+    print "Wrong session number!"
+  end
+end, { desc = "remove a session" })
+map("n", "<leader>cs", [[<cmd>lua =vim.v.this_session<cr>]], { desc = "show current session" })
+map("n", "<leader>ls", [[<cmd>lua MiniSessions.select()<cr>]], { desc = "show current session" })
 
 --> non-mini plugins mappings <--
 map("n", "<leader>ut", "<cmd>UndotreeToggle<cr>", { desc = "Toggle undo tree" })

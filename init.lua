@@ -46,7 +46,8 @@ end)
 --   vim.o.termguicolors = true
 --   vim.cmd "colorscheme randomhue"
 -- end)
--- now(load "plugins.mini-starter")
+now(load "plugins.mini-sessions")
+now(load "plugins.mini-starter")
 
 -- safely execute later
 later(load "plugins.mini-ai")
@@ -79,7 +80,6 @@ vim.notify = require("mini.notify").make_notify { ERROR = { duration = 10000 } }
 later(load "mini.operators")
 later(load "plugins.mini-pairs")
 later(load "plugins.mini-pick")
-later(load "plugins.mini-sessions")
 later(load "plugins.mini-snippets")
 later(load("mini.splitjoin", { mappings = { toggle = "gS", split = "gs", join = "gj" } }))
 later(load "mini.statusline")
