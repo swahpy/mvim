@@ -11,8 +11,8 @@ map("n", "C", '"_C', { desc = "change without yanking" })
 map("i", "<C-a>", "<ESC>^i", { desc = "move beginning of line" })
 map("i", "<C-e>", "<End>", { desc = "move end of line" })
 
-map("n", "gb", "^", { desc = "move to beginning character of current line" })
-map("n", "ge", "$", { desc = "move to ending character of current line" })
+map({ "n", "x", "v" }, "gb", "^", { desc = "move to beginning character of current line" })
+map({ "n", "x", "v" }, "ge", "$", { desc = "move to ending character of current line" })
 
 -- tab keymaps
 map("n", "<S-l>", function()
