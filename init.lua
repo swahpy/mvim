@@ -206,4 +206,5 @@ end)
 later(function()
   require "options"
   require "mappings"
+  require "plugins.zk"
 end)
