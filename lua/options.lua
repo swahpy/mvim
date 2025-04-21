@@ -1,7 +1,8 @@
 local o = vim.opt
 
 -- UI
-o.relativenumber = true
+vim.go.number = true
+vim.go.relativenumber = true
 o.scrolloff = 2
 o.winblend = 0
 o.wrap = true
