@@ -18,6 +18,10 @@ snippets.setup {
   mappings = { jump_next = "", jump_prev = "" },
 }
 
+-- integrate snippets in completion
+snippets.start_lsp_server()
+
+-- enable neotab
 require("mini.deps").add {
   source = "kawre/neotab.nvim",
 }
