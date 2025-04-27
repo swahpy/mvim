@@ -45,8 +45,7 @@ capabilities = vim.tbl_deep_extend("force", capabilities, completion.get_lsp_cap
 vim.lsp.config("*", { capabilities = capabilities })
 
 vim.lsp.set_log_level "DEBUG"
-
-vim.lsp.enable { "luals", "pyright", "ruff", "typoslsp" }
+vim.lsp.enable { "luals", "pyright", "ruff", "typoslsp", "gopls" }
 
 ----------------
 --> zk setup <--
