@@ -8,7 +8,7 @@ o.winblend = 0
 o.wrap = true
 
 -- editing
-o.tabstop = 2
+o.tabstop = 4
 o.shiftwidth = 2
 o.expandtab = true
 o.autoindent = true
