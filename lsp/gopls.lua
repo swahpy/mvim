@@ -40,4 +40,9 @@ return {
       end
     end)
   end,
+  settings = {
+    gopls = {
+      gofumpt = true,
+    },
+  },
 }
