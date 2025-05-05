@@ -1,10 +1,6 @@
 local pairs = require "mini.pairs"
 pairs.setup {
   modes = { command = true },
-  mappings = {
-    ["<"] = { action = "open", pair = "<>", neigh_pattern = "[^\\]." },
-    [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
-  },
 }
 -- disable mini.pairs for markdown files
 -- so that no extra ]s being inserted in links
