@@ -145,24 +145,3 @@ map("n", "<leader>ls", [[<cmd>lua MiniSessions.select()<cr>]], { desc = "show cu
 
 --> non-mini plugins mappings <--
 map("n", "<leader>ut", "<cmd>UndotreeToggle<cr>", { desc = "Toggle undo tree" })
-
--- To get more consistent behavior of `<CR>`, you can use this template in
--- your 'init.lua' to make customized mapping: >lua
-local keycode = vim.keycode or function(x)
-  return vim.api.nvim_replace_termcodes(x, true, true, true)
-end
-local keys = {
-  ["cr"] = keycode "<CR>",
-  ["ctrl-y"] = keycode "<C-y>",
-  ["ctrl-y_cr"] = keycode "<C-y><CR>",
-}
-_G.cr_action = function()
-  if vim.fn.pumvisible() ~= 0 then
-    -- If popup is visible, confirm selected item or add new line otherwise
-    local item_selected = vim.fn.complete_info()["selected"] ~= -1
-    return item_selected and keys["ctrl-y"] or keys["ctrl-y_cr"]
-  else
-    return require("mini.pairs").cr()
-  end
-end
-map("i", "<CR>", "v:lua._G.cr_action()", { expr = true })

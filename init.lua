@@ -71,6 +71,7 @@ later(load "mini.icons")
 later(load "plugins.mini-indentscope")
 later(load "mini.jump")
 later(load("mini.jump2d", { view = { dim = true } }))
+later(load "plugins.mini-keymap")
 later(load "plugins.mini-map")
 later(load("mini.misc", { make_global = { "put", "put_text" } }))
 require("mini.misc").setup_restore_cursor()
@@ -115,11 +116,6 @@ later(function()
     },
   }
   require "plugins.treesitter"
-end)
--- better escape
-later(function()
-  add { source = "max397574/better-escape.nvim" }
-  require("better_escape").setup()
 end)
 -- friendly-snippets
 later(function()

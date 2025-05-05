@@ -21,38 +21,6 @@ snippets.setup {
 -- integrate snippets in completion
 snippets.start_lsp_server()
 
--- enable neotab
-require("mini.deps").add {
-  source = "kawre/neotab.nvim",
-}
-require("neotab").setup()
-
-local loop_or_expand_or_jump = function()
-  -- local can_expand = #snippets.expand { insert = false } > 0
-  local is_active = snippets.session.get() ~= nil
-
-  if vim.fn.pumvisible() == 1 then
-    return "<C-n>"
-  -- elseif can_expand then
-  --   vim.schedule(snippets.expand)
-  --   return ""
-  elseif is_active then
-    snippets.session.jump "next"
-    return ""
-  else
-    return "<Plug>(neotab-out)"
-  end
-end
-map("i", "<Tab>", loop_or_expand_or_jump, { expr = true })
-local loop_or_jump_prev = function()
-  if vim.fn.pumvisible() == 1 then
-    return "<C-p>"
-  else
-    snippets.session.jump "prev"
-  end
-end
-map("i", "<S-Tab>", loop_or_jump_prev, { expr = true })
-
 -- select from all available snippets in current context
 local rhs = function()
   snippets.expand { match = false }
