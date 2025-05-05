@@ -5,6 +5,7 @@ local map_combo = keymap.map_combo
 -- Setup multi steps
 local tab_steps = {
   "pmenu_next",
+  "increase_indent",
   "minisnippets_next",
   "minisnippets_expand",
   "jump_after_tsnode",
@@ -13,6 +14,7 @@ local tab_steps = {
 map_multistep("i", "<Tab>", tab_steps)
 local shifttab_steps = {
   "pmenu_next",
+  "decrease_indent",
   "minisnippets_prev",
   "jump_before_tsnode",
   "jump_before_open",
