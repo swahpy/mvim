@@ -7,17 +7,16 @@ local tab_steps = {
   "pmenu_next",
   "increase_indent",
   "minisnippets_next",
-  "minisnippets_expand",
-  "jump_after_tsnode",
   "jump_after_close",
+  "jump_after_tsnode",
 }
 map_multistep("i", "<Tab>", tab_steps)
 local shifttab_steps = {
-  "pmenu_next",
+  "pmenu_prev",
   "decrease_indent",
   "minisnippets_prev",
-  "jump_before_tsnode",
   "jump_before_open",
+  "jump_before_tsnode",
 }
 map_multistep("i", "<S-Tab>", shifttab_steps)
 map_multistep("i", "<CR>", { "pmenu_accept", "minipairs_cr" })
