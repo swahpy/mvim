@@ -144,7 +144,7 @@ end)
 -- lspconfig
 later(function()
   add {
-    source = "williamboman/mason.nvim",
+    source = "mason-org/mason.nvim",
   }
   require "plugins.lsp"
   require("mason").setup()
