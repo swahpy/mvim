@@ -1,0 +1,41 @@
+return {
+  -- neotab
+  {
+    "kawre/neotab.nvim",
+    event = "InsertEnter",
+  },
+  -- config blink keymap
+  {
+    "saghen/blink.cmp",
+    opts = {
+      keymap = {
+        ["<Tab>"] = { "select_next", "snippet_forward", "fallback_to_mappings" },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback_to_mappings" },
+        ["<M-k>"] = { "select_prev", "fallback" },
+        ["<M-j>"] = { "select_next", "fallback" },
+        ["<C-c>"] = { "show", "fallback" },
+      },
+    },
+  },
+  -- lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      setup = {
+        ["*"] = function(_, _)
+          LazyVim.lsp.on_attach(function(_, buffer)
+            -- Set up 'mini.completion' LSP part of completion
+            vim.bo[buffer].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
+          end)
+        end,
+      },
+    },
+  },
+  -- better escape
+  -- {
+  --   "max397574/better-escape.nvim",
+  --   config = function()
+  --     require("better_escape").setup()
+  --   end,
+  -- },
+}
