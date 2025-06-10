@@ -49,14 +49,14 @@ local mini_keymap_setup = function(_, opts)
   map_combo({ "n", "x" }, "hh", "g^")
 end
 
-local mini_move_setup = function(_, opts)
-  local move = require("mini.move")
-  move.setup()
+local mini_operators_setup = function(_, opts)
+  local operators = require("mini.operators")
+  operators.setup()
 end
 
 local mini_trailspace_setup = function(_, opts)
-  local move = require("mini.trailspace")
-  move.setup()
+  local trailspace = require("mini.trailspace")
+  trailspace.setup()
   local rhs = "<cmd>lua MiniTrailspace.trim()<cr>"
   map("n", "<leader>ts", rhs, { desc = "Trim all trailing whitespaces" })
   rhs = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
@@ -64,10 +64,10 @@ local mini_trailspace_setup = function(_, opts)
 end
 
 local mini_setup = function(_, opts)
-  mini_keymap_setup(_, opts)
-  mini_move_setup(_, opts)
-  mini_trailspace_setup(_, opts)
   mini_basic_setup(_, opts)
+  mini_keymap_setup(_, opts)
+  mini_operators_setup(_, opts)
+  mini_trailspace_setup(_, opts)
 end
 
 return {
