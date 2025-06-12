@@ -54,6 +54,11 @@ local mini_operators_setup = function(_, opts)
   operators.setup()
 end
 
+local mini_splitjoin_setup = function(_, opts)
+  local splitjoin = require("mini.splitjoin")
+  splitjoin.setup()
+end
+
 local mini_trailspace_setup = function(_, opts)
   local trailspace = require("mini.trailspace")
   trailspace.setup()
@@ -68,6 +73,7 @@ local mini_setup = function(_, opts)
   mini_keymap_setup(_, opts)
   mini_operators_setup(_, opts)
   mini_trailspace_setup(_, opts)
+  mini_splitjoin_setup(_, opts)
 end
 
 return {
