@@ -31,6 +31,28 @@ return {
       },
     },
   },
+  {
+    "stevearc/oil.nvim",
+    opts = {
+      delete_to_trash = true, -- Delete files to trash instead of permanently
+      keymaps = {
+        ["h"] = { "actions.parent", mode = "n" },
+        ["l"] = "actions.select",
+        ["|"] = { "actions.select", opts = { vertical = true } },
+        ["_"] = { "actions.select", opts = { horizontal = true } },
+        ["gr"] = { "actions.open_cwd", mode = "n" },
+        ["q"] = { "actions.close", mode = "n" },
+      },
+    },
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+    keys = {
+      { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+      { "<leader>-", "<cmd>Oil --float<cr>", desc = "Open parent directory" },
+    },
+  },
   -- better escape
   -- {
   --   "max397574/better-escape.nvim",
