@@ -15,3 +15,8 @@ map("n", "<A-->", function()
   Snacks.terminal(nil, { cwd = LazyVim.root() })
 end, { desc = "Terminal (Root Dir)" })
 map("t", "<A-->", "<cmd>close<cr>", { desc = "Close Terminal" })
+
+-- formatting
+map({ "n", "v" }, "<M-f>", function()
+  LazyVim.format({ force = true })
+end, { desc = "Format" })
