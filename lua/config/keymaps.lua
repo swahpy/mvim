@@ -20,13 +20,3 @@ map("t", "<A-->", "<cmd>close<cr>", { desc = "Close Terminal" })
 map({ "n", "v" }, "<M-f>", function()
   LazyVim.format({ force = true })
 end, { desc = "Format" })
-
-function _G.center_current_line()
-  vim.cmd("normal! zz")
-end
-map("n", "o", "<cmd>lua center_current_line()<CR>o", { noremap = true })
-map("n", "O", "<cmd>lua center_current_line()<CR>O", { noremap = true })
-map("n", "i", "<cmd>lua center_current_line()<CR>i", { noremap = true })
-map("n", "a", "<cmd>lua center_current_line()<CR>a", { noremap = true })
-map("n", "cc", "<cmd>lua center_current_line()<CR>cc", { noremap = true })
-map("n", "C", "<cmd>lua center_current_line()<CR>C", { noremap = true })
