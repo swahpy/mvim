@@ -14,3 +14,5 @@ map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 map("n", "c", '"_c', { desc = "change without yanking" })
 map("n", "C", '"_C', { desc = "change without yanking" })
+
+map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
