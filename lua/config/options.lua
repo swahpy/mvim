@@ -9,9 +9,12 @@ o.shiftwidth = 2 -- Size of an indent
 o.shiftround = true -- Round indent
 o.expandtab = true -- Use spaces instead of tabs
 o.softtabstop = 2
+o.autoindent = true
 
 o.swapfile = false
 
 o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 o.foldmethod = "indent"
+
+o.relativenumber = true
