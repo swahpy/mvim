@@ -1,0 +1,298 @@
+vim.pack.add({
+	"}https://github.com/echasnovski/mini.nvim"
+})
+
+local map = vim.keymap.set
+
+--> mini.extra
+local extra = require "mini.extra"
+
+--> mini.ai
+local ai = require "mini.ai"
+local spec = ai.gen_spec
+local gen_ai_spec = extra.gen_ai_spec
+ai.setup {
+  -- Number of lines within which textobject is searched
+  n_lines = 500,
+  custom_textobjects = {
+    o = spec.treesitter { -- code block
+      a = {
+        "@block.outer",
+        "@conditional.outer",
+        "@loop.outer",
+      },
+      i = {
+        "@block.inner",
+        "@conditional.inner",
+        "@loop.inner",
+      },
+    },
+    -- Tweak function call to not detect dot in function name
+    f = spec.function_call { name_pattern = "[%w_]" },
+
+    -- Function definition (needs treesitter queries with these captures)
+    F = spec.treesitter { a = "@function.outer", i = "@function.inner" },
+
+    -- Make `|` select both edges in non-balanced way
+    ["|"] = spec.pair("|", "|", { type = "non-balanced" }),
+
+    -- tag
+    t = {
+      "<([%p%w]-)%f[^<%w][^<>]->.-</%1>",
+      "^<.->().*()</[^/]->$",
+    },
+
+    -- snake_case, camelCase, PascalCase, etc; all capitalizations
+    w = {
+      {
+        -- reference, https://github.com/echasnovski/mini.nvim/discussions/1434
+        "%u[%l%d]+%f[^%l%d]",
+        "%f[^%s%p][%l%d]+%f[^%l%d]",
+        "^[%l%d]+%f[^%l%d]",
+        "%f[^%s%p][%a%d]+%f[^%a%d]",
+        "^[%a%d]+%f[^%a%d]",
+      },
+      "^().*()$",
+    },
+    u = spec.function_call(), -- u for "Usage"
+    [" "] = { "%f[%S][%w%p]+%f[%s]", "^().*()$" }, -- match content between space
+    -- from mini.extra
+    g = gen_ai_spec.buffer(),
+    D = gen_ai_spec.diagnostic(),
+    I = gen_ai_spec.indent(),
+    d = gen_ai_spec.number(),
+    j = { "%f[^%c][^%c]*", "^%s*().-()%s*$" }, -- match whole line
+  },
+}
+
+--> mini.basics
+require("mini.basics").setup({
+   options = {
+      extra_ui = true,
+      win_borders = 'double',
+    },
+    mappings = {
+      windows = true,
+      move_with_alt = true,
+    },
+    autocommands = {
+      relnum_in_visual_mode = true,
+    },
+})
+
+--> mini.completion
+local kind_priority = { Text = -1, Snippet = 99 }
+local opts = { filtersort = 'fuzzy', kind_priority = kind_priority }
+local process_items = function(items, base)
+  return MiniCompletion.default_process_items(items, base, opts)
+end
+local completion = require "mini.completion"
+completion.setup {
+  window = {
+    info = { border = "double" },
+    signature = { border = "double" },
+  },
+  lsp_completion = {
+    source_func = "omnifunc",
+    auto_setup = false,
+    lsp_completion = { process_items = process_items },
+  },
+  mappings = {
+    force_twostep = "<C-t>",
+    force_fallback = "<A-f>",
+  },
+}
+
+--> mini.icons
+local icons = require "mini.icons"
+icons.setup()
+icons.tweak_lsp_kind()
+
+--> mini.indentscope
+local indent = require "mini.indentscope"
+indent.setup {
+  options = {
+    indent_at_cursor = false,
+  },
+}
+local f = function(args)
+  vim.b[args.buf].miniindentscope_disable = true
+end
+vim.api.nvim_create_autocmd(
+  "Filetype",
+  { pattern = { "mason", "checkhealth", "toggleterm", "markdown" }, callback = f }
+)
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  desc = "Disable indentscope for certain buftypes",
+  callback = function()
+    local ignore_buftypes = {
+      "help",
+    }
+    local bt = vim.bo.buftype
+    if vim.tbl_contains(ignore_buftypes, bt) then
+      vim.b.miniindentscope_disable = true
+    end
+  end,
+})
+
+--> mini.keymap
+local keymap = require "mini.keymap"
+local map_multistep = keymap.map_multistep
+local tab_steps = {'pmenu_next', 'minisnippets_next', 'jump_after_close'}
+map_multistep({'i','s'}, '<Tab>',   tab_steps)
+local shifttab_steps = { 'pmenu_prev', 'minisnippets_prev', 'jump_before_open'}
+map_multistep({'i','s'}, '<S-Tab>', shifttab_steps)
+map_multistep('i', '<CR>',    { 'pmenu_accept', 'minipairs_cr' })
+map_multistep('i', '<BS>',    { 'minipairs_bs', 'hungry_bs' })
+local mode = { 'i', 'c', 'x', 's' }
+require('mini.keymap').map_combo(mode, 'jk', '<BS><BS><Esc>')
+require('mini.keymap').map_combo(mode, 'kj', '<BS><BS><Esc>')
+require('mini.keymap').map_combo('t', 'jk', '<BS><BS><C-\\><C-n>')
+require('mini.keymap').map_combo('t', 'kj', '<BS><BS><C-\\><C-n>')
+local map_combo = keymap.map_combo
+map_combo({ 'n', 'x' }, 'll', 'g$')
+map_combo({ 'n', 'x' }, 'hh', 'g^')
+
+--> mini.operators
+local operators = require("mini.operators")
+operators.setup()
+
+--> mini.pairs
+local pairs = require "mini.pairs"
+pairs.setup({
+    modes = { command = true, terminal = true },
+})
+
+--> mini.pick
+local pick = require "mini.pick"
+local win_config = function()
+  local height = math.floor(0.618 * vim.o.lines)
+  local width = math.floor(0.618 * vim.o.columns)
+  return {
+    anchor = 'NW', height = height, width = width,
+    row = math.floor(0.5 * (vim.o.lines - height)),
+    col = math.floor(0.5 * (vim.o.columns - width)),
+  }
+end
+pick.setup {
+  -- Keys for performing actions. See `:h MiniPick-actions`.
+  mappings = {
+    caret_left = "<A-h>",
+    caret_right = "<A-l>",
+    choose_in_split = "<A-s>",
+    choose_in_vsplit = "<A-v>",
+    delete_word = "<A-Bs>",
+    mark = "<A-m>",
+    mark_all = "<A-a>",
+    move_down = "<A-j>",
+    move_up = "<A-k>",
+    paste = "<A-p>",
+    refine = "<A-r>",
+    refine_marked = "<C-r>",
+  },
+  -- General options
+  options = {
+    use_cache = true,
+  },
+
+  window = { config = win_config }
+}
+-- files
+map("n", "<leader>pf", function()
+  pick.builtin.files()
+end, { desc = "pick from files" })
+map("n", "<leader>po", function()
+  extra.pickers.oldfiles()
+end, { desc = "pick from old files" })
+map("n", "<leader>pp", function()
+  pick.builtin.grep()
+end, { desc = "pick from pattern matches" })
+map("n", "<leader>pg", function()
+  pick.builtin.grep_live()
+end, { desc = "pick from pattern matches with live feedback" })
+-- neovim builtin
+map("n", "<leader>ph", function()
+  pick.builtin.help()
+end, { desc = "pick from help tags" })
+map("n", "<leader>pc", function()
+  extra.pickers.commands()
+end, { desc = "pick from neovim commands" })
+map("n", "<leader>pd", function()
+  extra.pickers.diagnostic()
+end, { desc = "pick from diagnostics" })
+-- buffer
+map("n", "<leader>pb", function()
+  pick.builtin.buffers()
+end, { desc = "pick from buffers" })
+map("n", "<leader>bl", function()
+  extra.pickers.buf_lines()
+end, { desc = "pick from buffer lines" })
+map("n", "<leader>pr", function()
+  pick.builtin.resume()
+end, { desc = "pick from latest pickers" })
+-- git
+map("n", "<leader>gc", function()
+  extra.pickers.git_commits()
+end, { desc = "pick from git commits" })
+map("n", "<leader>gh", function()
+  extra.pickers.git_hunks()
+end, { desc = "pick from git hunks" })
+-- lsp
+map("n", "<leader>plr", function()
+  extra.pickers.lsp { scope = "references" }
+end, { desc = "pick from lsp references" })
+map("n", "<leader>plt", function()
+  extra.pickers.lsp { scope = "type_definition" }
+end, { desc = "pick from lsp type_definition" })
+map("n", "<leader>pls", function()
+  extra.pickers.lsp { scope = "workspace_symbol" }
+end, { desc = "pick from lsp workspace_symbol" })
+map("n", "<leader>pld", function()
+  extra.pickers.lsp { scope = "definition" }
+end, { desc = "pick from lsp definition" })
+map("n", "<leader>pli", function()
+  extra.pickers.lsp { scope = "implementation" }
+end, { desc = "pick from lsp implementation" })
+map("n", "<leader>plD", function()
+  extra.pickers.lsp { scope = "declaration" }
+end, { desc = "pick from lsp declaration" })
+map("n", "<leader>plc", function()
+  extra.pickers.lsp { scope = "document_symbol" }
+end, { desc = "pick from lsp document_symbol" })
+-- visits
+map("n", "<leader>vr", function()
+  extra.pickers.visit_paths { recency_weight = 1 }
+end, { desc = "pick from recent cwd visit_paths" })
+map("n", "<leader>vR", function()
+  extra.pickers.visit_paths { recency_weight = 1, cwd = "" }
+end, { desc = "pick from recent global visit_paths" })
+map("n", "<leader>vf", function()
+  extra.pickers.visit_paths { recency_weight = 0 }
+end, { desc = "pick from frequent cwd visit_paths" })
+map("n", "<leader>vF", function()
+  extra.pickers.visit_paths { recency_weight = 0, cwd = "" }
+end, { desc = "pick from frequent global visit_paths" })
+map("n", "<leader>vc", function()
+  extra.pickers.visit_paths { recency_weight = 0.5 }
+end, { desc = "pick from frecent cwd visit_paths" })
+map("n", "<leader>vC", function()
+  extra.pickers.visit_paths { recency_weight = 0.5, cwd = "" }
+end, { desc = "pick from frecent global visit_paths" })
+map("n", "<leader>vl", function()
+  extra.pickers.visit_labels {}
+end, { desc = "pick from cwd labels" })
+map("n", "<leader>vL", function()
+  extra.pickers.visit_labels { cwd = "" }
+end, { desc = "pick from global labels" })
+
+--> mini.splitjoin
+  local splitjoin = require("mini.splitjoin")
+  splitjoin.setup()
+
+--> mini.trailspace
+  local trailspace = require("mini.trailspace")
+  trailspace.setup()
+  local rhs = "<cmd>lua MiniTrailspace.trim()<cr>"
+  map("n", "<leader>ts", rhs, { desc = "Trim all trailing whitespaces" })
+  rhs = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
+  map("n", "<leader>tl", rhs, { desc = "Trim all trailing empty lines" })
