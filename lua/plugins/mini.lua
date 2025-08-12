@@ -6,6 +6,7 @@ vim.pack.add({
 local map = vim.keymap.set
 
 local extra = require("mini.extra")
+extra.setup({})
 
 --> mini.ai
 local ai = require("mini.ai")
@@ -15,22 +16,9 @@ ai.setup({
 	-- Number of lines within which textobject is searched
 	n_lines = 500,
 	custom_textobjects = {
-		o = spec.treesitter({ -- code block
-			a = {
-				"@block.outer",
-				"@conditional.outer",
-				"@loop.outer",
-			},
-			i = {
-				"@block.inner",
-				"@conditional.inner",
-				"@loop.inner",
-			},
-		}),
 		-- Tweak function call to not detect dot in function name
 		f = spec.function_call({ name_pattern = "[%w_]" }),
 		-- Function definition (needs treesitter queries with these captures)
-		F = spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
 		-- Make `|` select both edges in non-balanced way
 		["|"] = spec.pair("|", "|", { type = "non-balanced" }),
 		-- tag
@@ -125,12 +113,12 @@ map("n", "<leader>l", "<cmd>lua MiniVisits.add_label()<cr>", { desc = "Add label
 map("n", "<leader>L", "<cmd>lua MiniVisits.remove_label()<cr>", { desc = "Remove label" })
 
 --> mini.completion
+local completion = require("mini.completion")
 local kind_priority = { Text = -1, Snippet = 99 }
 local opts = { filtersort = "fuzzy", kind_priority = kind_priority }
 local process_items = function(items, base)
-	return MiniCompletion.default_process_items(items, base, opts)
+	return completion.default_process_items(items, base, opts)
 end
-local completion = require("mini.completion")
 completion.setup({
 	window = {
 		info = { border = "double" },
@@ -158,7 +146,7 @@ local f = function(args)
 	vim.b[args.buf].miniindentscope_disable = true
 end
 vim.api.nvim_create_autocmd(
-	"Filetype",
+	"FileType",
 	{ pattern = { "mason", "checkhealth", "toggleterm", "markdown" }, callback = f }
 )
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
@@ -255,7 +243,7 @@ map("n", "<leader>fb", function()
 	pick.builtin.buffers()
 end, { desc = "pick from buffers" })
 map("n", "<leader>fl", function()
-	extra.pickers.buf_lines()
+	extra.pickers.buf_lines({ scope = "current" })
 end, { desc = "pick from buffer lines" })
 map("n", "<leader>fk", function()
 	extra.pickers.keymaps()
@@ -342,25 +330,25 @@ snippets.setup({
 })
 snippets.start_lsp_server()
 local rhs = function()
-	MiniSnippets.expand({ match = false })
+	snippets.expand({ match = false })
 end
 map("i", "<C-g><C-j>", rhs, { desc = "Expand all" })
 local make_stop = function()
 	local au_opts = { pattern = "*:n", once = true }
 	au_opts.callback = function()
-		while MiniSnippets.session.get() do
-			MiniSnippets.session.stop()
+		while snippets.session.get() do
+			snippets.session.stop()
 		end
 	end
 	vim.api.nvim_create_autocmd("ModeChanged", au_opts)
 end
-local opts = { pattern = "MiniSnippetsSessionStart", callback = make_stop }
+opts = { pattern = "MiniSnippetsSessionStart", callback = make_stop }
 vim.api.nvim_create_autocmd("User", opts)
 
 --> mini.trailspace
 local trailspace = require("mini.trailspace")
 trailspace.setup()
-local rhs = "<cmd>lua MiniTrailspace.trim()<cr>"
-map("n", "<leader>ts", rhs, { desc = "Trim all trailing whitespaces" })
-rhs = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
-map("n", "<leader>tl", rhs, { desc = "Trim all trailing empty lines" })
+local cmd = "<cmd>lua MiniTrailspace.trim()<cr>"
+map("n", "<leader>ts", cmd, { desc = "Trim all trailing whitespaces" })
+cmd = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
+map("n", "<leader>tl", cmd, { desc = "Trim all trailing empty lines" })

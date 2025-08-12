@@ -8,8 +8,8 @@ o.tabstop = 2 -- Number of spaces tabs count for
 o.shiftwidth = 2 -- Size of an indent
 o.softtabstop = 2
 o.shiftround = true -- Round indent
-o.breakindent = true
 o.autoindent = true
+o.preserveindent = true
 o.smartindent = true
 o.expandtab = true -- Use spaces instead of tabs
 
@@ -18,6 +18,7 @@ o.swapfile = false
 o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 o.foldmethod = "indent"
+o.foldlevel = 99
 
 o.relativenumber = true
 
