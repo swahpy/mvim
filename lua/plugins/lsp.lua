@@ -7,7 +7,7 @@ require("mason").setup()
 
 -- All language servers are expected to be installed with 'mason.vnim'
 vim.lsp.enable({
-  "emmet_ls",
+  "emmet_language_server",
   "gopls",
   "lua_ls",
 })
