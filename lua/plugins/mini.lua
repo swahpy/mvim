@@ -114,8 +114,11 @@ map("n", "<leader>L", "<cmd>lua MiniVisits.remove_label()<cr>", { desc = "Remove
 
 --> mini.completion
 local completion = require("mini.completion")
-local kind_priority = { Text = -1, Snippet = 99 }
-local opts = { filtersort = "fuzzy", kind_priority = kind_priority }
+-- local kind_priority = { Text = -1, Snippet = 99 }
+local opts = {
+  filtersort = "fuzzy",
+  -- kind_priority = kind_priority
+}
 local process_items = function(items, base)
   return completion.default_process_items(items, base, opts)
 end
@@ -170,7 +173,7 @@ map_multistep({ "i", "s" }, "<Tab>", tab_steps)
 local shifttab_steps = { "pmenu_prev", "minisnippets_prev", "jump_before_open" }
 map_multistep({ "i", "s" }, "<S-Tab>", shifttab_steps)
 map_multistep("i", "<CR>", { "pmenu_accept", "minipairs_cr" })
-map_multistep("i", "<BS>", { "minipairs_bs", "hungry_bs" })
+map_multistep("i", "<BS>", { "hungry_bs", "minipairs_bs" })
 local mode = { "i", "c", "x", "s" }
 require("mini.keymap").map_combo(mode, "jk", "<BS><BS><Esc>")
 require("mini.keymap").map_combo(mode, "kj", "<BS><BS><Esc>")
