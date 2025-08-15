@@ -22,7 +22,7 @@ o.foldlevel = 99
 
 o.relativenumber = true
 
-o.mousescroll = "ver:25,hor:6"
+o.mousescroll = "ver:15,hor:6"
 
 o.formatoptions = "rqnl1j"
 

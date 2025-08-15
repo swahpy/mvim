@@ -10,6 +10,8 @@ vim.lsp.enable({
   "emmet_language_server",
   "gopls",
   "lua_ls",
+  "vue_ls",
+  "ts_ls",
 })
 
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lsp

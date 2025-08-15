@@ -89,6 +89,8 @@ map(
   "<cmd>lua MiniGit.show_at_cursor()<cr>",
   { desc = "shows Git related data depending on context" }
 )
+local hipatterns = require("mini.hipatterns")
+hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
 local misc = require("mini.misc")
 misc.setup({})
 misc.setup_auto_root()
