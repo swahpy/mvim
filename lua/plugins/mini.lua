@@ -170,7 +170,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 --> mini.keymap
 local keymap = require("mini.keymap")
 local map_multistep = keymap.map_multistep
-local tab_steps = { "pmenu_accept",  "increase_indent"}
+local tab_steps = { "pmenu_accept" , "increase_indent","jump_after_close" }
 map_multistep({ "i", "s" }, "<Tab>", tab_steps)
 local shifttab_steps = { "jump_before_open", "decrease_indent" }
 map_multistep({ "i", "s" }, "<S-Tab>", shifttab_steps)
