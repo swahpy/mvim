@@ -49,6 +49,39 @@ ai.setup({
   },
 })
 
+--> mini.animate
+local animate = require("mini.animate")
+animate.setup({
+  cursor = {
+    enable = true,
+    -- Neovide-like cursor movement with cubic easing
+    timing = animate.gen_timing.cubic({
+      duration = 150,
+      unit = "total",
+      easing = "out",
+    }),
+    path = animate.gen_path.line({
+      predicate = function()
+        return true
+      end,
+    }),
+  },
+  scroll = {
+    enable = true,
+    -- Optimized timing based on documentation recommendations
+    -- Prevents conflicts with rapid scrolling while maintaining smoothness
+    timing = function(_, n)
+      return math.min(300 / n, 6)
+    end,
+    subscroll = animate.gen_subscroll.equal({
+      max_output_steps = 80, -- Balanced for smoothness without performance issues
+      predicate = function(total_scroll)
+        return total_scroll > 0 -- Always animate any scroll
+      end,
+    }),
+  },
+})
+
 --> mini.basics
 -- in order for leader key to work, mini.basic
 -- shoule put before all keymaps using leader key.
@@ -68,39 +101,6 @@ require("mini.basics").setup({
 
 --> mini one-liners
 require("mini.align").setup({})
-local animate = require("mini.animate")
-animate.setup({
-  cursor = {
-    enable = true,
-    -- Neovide-like cursor movement with cubic easing
-    timing = animate.gen_timing.cubic({
-      duration = 150,
-      unit = "total",
-      easing = "out",
-    }),
-    path = animate.gen_path.line({
-      predicate = function()
-        return true
-      end,
-    }),
-  },
-
-  scroll = {
-    enable = true,
-    -- Optimized timing based on documentation recommendations
-    -- Prevents conflicts with rapid scrolling while maintaining smoothness
-    timing = function(_, n)
-      return math.min(300 / n, 6)
-    end,
-    subscroll = animate.gen_subscroll.equal({
-      max_output_steps = 80, -- Balanced for smoothness without performance issues
-      predicate = function(total_scroll)
-        return total_scroll > 0 -- Always animate any scroll
-      end,
-    }),
-  },
-
-})
 require("mini.bracketed").setup({})
 local bufremove = require("mini.bufremove")
 bufremove.setup({})
@@ -123,6 +123,7 @@ map(
 )
 local hipatterns = require("mini.hipatterns")
 hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
+require("mini.jump").setup({})
 local misc = require("mini.misc")
 misc.setup({})
 misc.setup_auto_root()
@@ -198,6 +199,28 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     end
   end,
 })
+
+--> mini.jump2d
+local jump2d = require("mini.jump2d")
+jump2d.setup({
+  view = {
+    dim = true,
+    n_steps_ahead = 2,
+  },
+})
+map({ "o", "x", "n" }, "<leader>sw", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<cr>")
+map({ "o", "x", "n" }, "<leader>sl", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.line_start)<cr>")
+map({ "o", "x", "n" }, "<leader>sf", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<cr>")
+map({ "o", "x", "n" }, "<leader>sp", function()
+  jump2d.start({
+    spotter = jump2d.gen_spotter.pattern("%p+"),
+    view = { n_steps_ahead = 0 },
+  })
+end)
+map({ "o", "x", "n" }, "<leader>sd", function()
+  jump2d.start({ spotter = jump2d.gen_spotter.pattern("%d+") })
+end)
+map({ "o", "x", "n" }, "<Cr>", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>")
 
 --> mini.keymap
 local keymap = require("mini.keymap")
