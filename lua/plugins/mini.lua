@@ -68,7 +68,39 @@ require("mini.basics").setup({
 
 --> mini one-liners
 require("mini.align").setup({})
-require("mini.animate").setup({})
+local animate = require("mini.animate")
+animate.setup({
+  cursor = {
+    enable = true,
+    -- Neovide-like cursor movement with cubic easing
+    timing = animate.gen_timing.cubic({
+      duration = 150,
+      unit = "total",
+      easing = "out",
+    }),
+    path = animate.gen_path.line({
+      predicate = function()
+        return true
+      end,
+    }),
+  },
+
+  scroll = {
+    enable = true,
+    -- Optimized timing based on documentation recommendations
+    -- Prevents conflicts with rapid scrolling while maintaining smoothness
+    timing = function(_, n)
+      return math.min(300 / n, 6)
+    end,
+    subscroll = animate.gen_subscroll.equal({
+      max_output_steps = 80, -- Balanced for smoothness without performance issues
+      predicate = function(total_scroll)
+        return total_scroll > 0 -- Always animate any scroll
+      end,
+    }),
+  },
+
+})
 require("mini.bracketed").setup({})
 local bufremove = require("mini.bufremove")
 bufremove.setup({})
@@ -170,7 +202,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 --> mini.keymap
 local keymap = require("mini.keymap")
 local map_multistep = keymap.map_multistep
-local tab_steps = { "pmenu_accept" , "increase_indent","jump_after_close" }
+local tab_steps = { "pmenu_accept", "increase_indent", "jump_after_close" }
 map_multistep({ "i", "s" }, "<Tab>", tab_steps)
 local shifttab_steps = { "jump_before_open", "decrease_indent" }
 map_multistep({ "i", "s" }, "<S-Tab>", shifttab_steps)
