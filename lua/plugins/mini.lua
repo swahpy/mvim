@@ -99,6 +99,65 @@ require("mini.basics").setup({
   },
 })
 
+local miniclue = require("mini.clue")
+miniclue.setup({
+  triggers = {
+    -- Leader triggers
+    { mode = "n", keys = "<Leader>" },
+    { mode = "x", keys = "<Leader>" },
+    -- Built-in completion
+    { mode = "i", keys = "<C-x>" },
+    -- `g` key
+    { mode = "n", keys = "g" },
+    { mode = "x", keys = "g" },
+    -- Marks
+    { mode = "n", keys = "'" },
+    { mode = "n", keys = "`" },
+    { mode = "x", keys = "'" },
+    { mode = "x", keys = "`" },
+    -- Registers
+    { mode = "n", keys = '"' },
+    { mode = "x", keys = '"' },
+    { mode = "i", keys = "<C-r>" },
+    { mode = "c", keys = "<C-r>" },
+    -- Window commands
+    { mode = "n", keys = "<C-w>" },
+    -- `z` key
+    { mode = "n", keys = "z" },
+    { mode = "x", keys = "z" },
+    -- `[` and `]` key
+    { mode = "n", keys = "[" },
+    { mode = "x", keys = "[" },
+    { mode = "n", keys = "]" },
+    { mode = "x", keys = "]" },
+    -- \ key
+    { mode = "n", keys = "\\" },
+  },
+  clues = {
+    miniclue.gen_clues.square_brackets(),
+    miniclue.gen_clues.builtin_completion(),
+    miniclue.gen_clues.g(),
+    miniclue.gen_clues.marks(),
+    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.windows(),
+    miniclue.gen_clues.z(),
+    { mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
+    { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d" },
+    { mode = "n", keys = "<Leader>v", desc = "+MiniVisits" },
+    { mode = "n", keys = "]h", postkeys = "]" },
+    { mode = "n", keys = "]d", postkeys = "]" },
+    { mode = "n", keys = "]b", postkeys = "]" },
+    { mode = "n", keys = "[h", postkeys = "[" },
+    { mode = "n", keys = "[d", postkeys = "[" },
+    { mode = "n", keys = "[b", postkeys = "[" },
+    miniclue.gen_clues.windows({
+      submode_move = true,
+      submode_navigate = true,
+      submode_resize = true,
+    }),
+  },
+})
+
 --> mini one-liners
 require("mini.align").setup({})
 require("mini.bracketed").setup({})
@@ -283,9 +342,9 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",
   callback = function(args)
     local b = args.data.buf_id
-    vim.keymap.set("n", "g~", set_cwd, { buffer = b, desc = "Set cwd" })
-    vim.keymap.set("n", "gX", ui_open, { buffer = b, desc = "OS open" })
-    vim.keymap.set("n", "gy", yank_path, { buffer = b, desc = "Yank path" })
+    map("n", "g~", set_cwd, { buffer = b, desc = "Set cwd" })
+    map("n", "gX", ui_open, { buffer = b, desc = "OS open" })
+    map("n", "gy", yank_path, { buffer = b, desc = "Yank path" })
   end,
 })
 
@@ -324,19 +383,39 @@ jump2d.setup({
     n_steps_ahead = 2,
   },
 })
-map({ "o", "x", "n" }, "<leader>sw", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<cr>")
-map({ "o", "x", "n" }, "<leader>sl", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.line_start)<cr>")
-map({ "o", "x", "n" }, "<leader>sf", "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<cr>")
-map({ "o", "x", "n" }, "<leader>sp", function()
+map(
+  { "o", "x", "n" },
+  "<leader>jw",
+  "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<cr>",
+  { desc = "jump to word" }
+)
+map(
+  { "o", "x", "n" },
+  "<leader>jl",
+  "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.line_start)<cr>",
+  { desc = "jump to line" }
+)
+map(
+  { "o", "x", "n" },
+  "<leader>jf",
+  "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<cr>",
+  { desc = "jump to single single_character" }
+)
+map({ "o", "x", "n" }, "<leader>jp", function()
   jump2d.start({
     spotter = jump2d.gen_spotter.pattern("%p+"),
     view = { n_steps_ahead = 0 },
   })
-end)
-map({ "o", "x", "n" }, "<leader>sd", function()
+end, { desc = "jump to digits" })
+map({ "o", "x", "n" }, "<leader>jd", function()
   jump2d.start({ spotter = jump2d.gen_spotter.pattern("%d+") })
-end)
-map({ "o", "x", "n" }, "<Cr>", "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>")
+end, { desc = "jump to digits" })
+map(
+  { "o", "x", "n" },
+  "<Cr>",
+  "<Cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<CR>",
+  { desc = "jump to single_character" }
+)
 
 --> mini.keymap
 local keymap = require("mini.keymap")
@@ -404,6 +483,12 @@ end, { desc = "pick from pattern matches" })
 map("n", "<leader>fg", function()
   pick.builtin.grep_live()
 end, { desc = "pick from pattern matches with live feedback" })
+map("n", '<leader>f"', function()
+  extra.pickers.registers()
+end, { desc = "pick from registers" })
+map("n", "<leader>fm", function()
+  extra.pickers.marks()
+end, { desc = "pick from marks" })
 -- neovim builtin
 map("n", "<leader>fh", function()
   pick.builtin.help()
