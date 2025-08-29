@@ -99,6 +99,7 @@ require("mini.basics").setup({
   },
 })
 
+--> mini.clue
 local miniclue = require("mini.clue")
 miniclue.setup({
   triggers = {
