@@ -55,10 +55,10 @@ animate.setup({
   cursor = {
     enable = true,
     -- Neovide-like cursor movement with cubic easing
-    timing = animate.gen_timing.cubic({
-      duration = 150,
-      unit = "total",
-      easing = "out",
+    timing = animate.gen_timing.linear({
+      duration = 5,
+      unit = "step",
+      easing = "in",
     }),
     path = animate.gen_path.line({
       predicate = function()
@@ -146,10 +146,8 @@ miniclue.setup({
     { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d" },
     { mode = "n", keys = "<Leader>v", desc = "+MiniVisits" },
     { mode = "n", keys = "]h", postkeys = "]" },
-    { mode = "n", keys = "]d", postkeys = "]" },
     { mode = "n", keys = "]b", postkeys = "]" },
     { mode = "n", keys = "[h", postkeys = "[" },
-    { mode = "n", keys = "[d", postkeys = "[" },
     { mode = "n", keys = "[b", postkeys = "[" },
     miniclue.gen_clues.windows({
       submode_move = true,

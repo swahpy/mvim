@@ -58,3 +58,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 local completion = require("mini.completion")
 capabilities = vim.tbl_deep_extend("force", capabilities, completion.get_lsp_capabilities())
 vim.lsp.config("*", { capabilities = capabilities })
+
+-- setup lsp on-type formatting
+vim.lsp.on_type_formatting.enable()
