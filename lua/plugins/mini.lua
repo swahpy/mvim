@@ -55,16 +55,12 @@ animate.setup({
   cursor = {
     enable = true,
     -- Neovide-like cursor movement with cubic easing
-    timing = animate.gen_timing.linear({
-      duration = 5,
+    timing = animate.gen_timing.quartic({
+      duration = 2,
       unit = "step",
-      easing = "in",
+      easing = "in-out",
     }),
-    path = animate.gen_path.line({
-      predicate = function()
-        return true
-      end,
-    }),
+    path = animate.gen_path.line(),
   },
   scroll = {
     enable = true,
