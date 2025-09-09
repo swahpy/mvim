@@ -12,6 +12,7 @@ conform.setup({
     markdown = { "prettier" },
     python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
     toml = { "taplo" },
+    templ = { "djlint" },
     yaml = { "yq" },
   },
 })
