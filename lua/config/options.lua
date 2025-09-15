@@ -21,6 +21,7 @@ o.foldmethod = "indent"
 o.foldlevel = 99
 
 o.relativenumber = true
+o.winblend = 1
 
 o.mousescroll = "ver:15,hor:6"
 
@@ -28,9 +29,9 @@ o.formatoptions = "rqnl1j"
 
 o.iskeyword = "@,48-57,_,192-255,-" -- Treat dash separated words as a word text object
 
-o.completeopt = 'menuone,noselect,fuzzy,nosort'
+o.completeopt = "menuone,noselect,fuzzy,nosort"
 
-vim.o.listchars = table.concat({ 'extends:…', 'nbsp:␣', 'precedes:…', 'tab:  ' }, ',') -- Special text symbols
+vim.o.listchars = table.concat({ "extends:…", "nbsp:␣", "precedes:…", "tab:  " }, ",") -- Special text symbols
 
 if vim.fn.has("nvim-0.12") == 1 then
   vim.o.completefuzzycollect = "keyword,files,whole_line" -- Use fuzzy matching when collecting candidates
