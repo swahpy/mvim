@@ -30,7 +30,7 @@ o.formatoptions = "rqnl1j"
 
 o.iskeyword = "@,48-57,_,192-255,-" -- Treat dash separated words as a word text object
 
-o.completeopt = "menuone,noselect,fuzzy,nosort"
+o.completeopt = "menuone,noselect,fuzzy"
 
 vim.o.listchars = table.concat({ "extends:…", "nbsp:␣", "precedes:…", "tab:  " }, ",") -- Special text symbols
 
