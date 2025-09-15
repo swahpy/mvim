@@ -22,6 +22,7 @@ o.foldlevel = 99
 
 o.relativenumber = true
 o.winblend = 1
+o.winborder = "double"
 
 o.mousescroll = "ver:15,hor:6"
 
