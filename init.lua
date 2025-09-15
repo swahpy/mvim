@@ -7,4 +7,6 @@ require("plugins.conform")
 require("config.keymap")
 require("config.options")
 
-vim.cmd("colorscheme randomhue")
+-- vim.cmd("colorscheme randomhue")
+vim.pack.add({ "https://github.com/catppuccin/nvim" })
+vim.cmd("colorscheme catppuccin")
