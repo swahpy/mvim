@@ -11,6 +11,7 @@ vim.lsp.enable({
   "emmet_language_server",
   "gopls",
   "lua_ls",
+  "ruff",
   "vue_ls",
   "ts_ls",
 })
