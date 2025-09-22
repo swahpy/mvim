@@ -17,6 +17,6 @@ conform.setup({
   },
 })
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-vim.keymap.set("n", "<M-f>", function()
+vim.keymap.set({ "i", "n" }, "<M-f>", function()
   conform.format()
 end, { desc = "conform format" })
