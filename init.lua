@@ -3,6 +3,7 @@ require("plugins.mini")
 require("plugins.undotree")
 require("plugins.lsp")
 require("plugins.conform")
+require("plugins.codecompanion")
 
 require("config.keymap")
 require("config.options")
