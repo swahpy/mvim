@@ -194,6 +194,12 @@ require("mini.icons").setup()
 require("mini.icons").tweak_lsp_kind()
 require("mini.operators").setup()
 require("mini.pairs").setup({ modes = { command = true, terminal = true } })
+-- disable mini.pairs for markdown files
+-- so that no extra ]s being inserted in links
+local f = function(args)
+  vim.keymap.set("i", "[", "[", { buffer = args.buf })
+end
+vim.api.nvim_create_autocmd("Filetype", { pattern = "markdown", callback = f })
 require("mini.splitjoin").setup()
 require("mini.statusline").setup()
 require("mini.surround").setup({ n_lines = 500, respect_selection_type = true, search_method = "cover_or_next" })

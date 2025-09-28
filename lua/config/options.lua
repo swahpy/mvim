@@ -19,6 +19,7 @@ o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "global
 
 o.foldmethod = "indent"
 o.foldlevel = 99
+vim.g.markdown_folding = 1
 
 o.relativenumber = true
 o.winblend = 1
