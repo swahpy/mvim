@@ -47,6 +47,11 @@ require("codecompanion").setup({
       end,
     },
   },
+  display = {
+    chat = {
+      show_settings = true,
+    },
+  },
 })
 
 -- Set up command abbreviations for CodeCompanion
