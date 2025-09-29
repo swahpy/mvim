@@ -11,15 +11,15 @@ require("render-markdown").setup({
 require("codecompanion").setup({
   strategies = {
     chat = {
-      adapter = "openai_compatible",
+      adapter = "aiwave",
       model = "grok-4",
     },
     inline = {
-      adapter = "openai_compatible",
+      adapter = "aiwave",
       model = "grok-4",
     },
     cmd = {
-      adapter = "openai_compatible",
+      adapter = "aiwave",
       model = "grok-4",
     },
   },
@@ -28,7 +28,7 @@ require("codecompanion").setup({
       opts = {
         show_defaults = false,
       },
-      openai_compatible = function()
+      aiwave = function()
         return require("codecompanion.adapters").extend("openai_compatible", {
           env = {
             api_key = "AIWAVE_API_KEY",
@@ -38,9 +38,11 @@ require("codecompanion").setup({
           },
           schema = {
             model = {
-              default = function()
-                return "grok-4"
-              end,
+              default = "grok-4",
+              choices = { "grok-4", "gemini-2.0-flash", "gemini-2.5-pro", "claude-sonnet-4-20250514", "gpt-5-high" },
+            },
+            max_tokens = {
+              default = 9999,
             },
           },
         })
