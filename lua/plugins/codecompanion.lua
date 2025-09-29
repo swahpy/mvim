@@ -25,9 +25,6 @@ require("codecompanion").setup({
   },
   adapters = {
     http = {
-      opts = {
-        show_defaults = false,
-      },
       aiwave = function()
         return require("codecompanion.adapters").extend("openai_compatible", {
           env = {
@@ -38,10 +35,21 @@ require("codecompanion").setup({
           },
           schema = {
             model = {
+              order = 1,
+              mapping = "parameters",
+              type = "enum",
+              desc = "ID of the model to use.",
               default = "grok-4",
-              choices = { "grok-4", "gemini-2.0-flash", "gemini-2.5-pro", "claude-sonnet-4-20250514", "gpt-5-high" },
+              choices = {
+                "grok-4",
+                "gemini-2.0-flash",
+                "gemini-2.5-pro",
+                "claude-sonnet-4-20250514",
+                "gpt-5-high",
+              },
             },
             max_tokens = {
+              order = 2,
               default = 9999,
             },
           },
@@ -51,7 +59,7 @@ require("codecompanion").setup({
   },
   display = {
     chat = {
-      show_settings = true,
+      show_settings = false,
     },
   },
 })
