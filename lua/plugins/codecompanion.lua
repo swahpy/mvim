@@ -12,15 +12,15 @@ require("codecompanion").setup({
   strategies = {
     chat = {
       adapter = "aiwave",
-      model = "grok-4",
+      model = "grok-4-auto",
     },
     inline = {
       adapter = "aiwave",
-      model = "grok-4",
+      model = "grok-4-auto",
     },
     cmd = {
       adapter = "aiwave",
-      model = "grok-4",
+      model = "grok-4-auto",
     },
   },
   adapters = {
@@ -39,9 +39,10 @@ require("codecompanion").setup({
               mapping = "parameters",
               type = "enum",
               desc = "ID of the model to use.",
-              default = "grok-4",
+              default = "grok-4-auto",
               choices = {
                 "grok-4",
+                "grok-4-auto",
                 "gemini-2.0-flash",
                 "gemini-2.5-pro",
                 "claude-sonnet-4-20250514",
