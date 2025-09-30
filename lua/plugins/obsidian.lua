@@ -56,21 +56,3 @@ map({ "n", "v" }, "<leader>on", "<cmd>Obsidian new<cr>", { desc = "Create a new 
 map({ "n", "v" }, "<leader>ot", "<cmd>Obsidian today<cr>", { desc = "Create or Open today daily-note" })
 map({ "n", "v" }, "<leader>oy", "<cmd>Obsidian yesterday<cr>", { desc = "Create or Open yesterday daily-note" })
 map({ "n", "v" }, "<leader>oT", "<cmd>Obsidian tomorrow<cr>", { desc = "Create or Open tomorrow daily-note" })
-
--- toggle checkbox
-local toggle_checkbox = function()
-  local line = vim.api.nvim_get_current_line()
-  if line:match("^%s*%-%s%[%s%]%s*") then
-    line = line:gsub("^%s*%-%s%[%s%]%s*", "- [x] "):gsub("#todo", "#done")
-  elseif line:match("^%s*%-%s%[x%]%s*") then
-    line = line:gsub("^(%s*%-%s%[x%]%s*)", "- [ ] "):gsub("#done", "#todo")
-  elseif not line:match("^%s*%-%s%[.*%]%s*") then
-    line = "- [ ] " .. line .. " #todo"
-  end
-  vim.api.nvim_set_current_line(line)
-end
-
--- toggle checkbox with todo or done tag
-map("n", "<leader>tc", function()
-  toggle_checkbox()
-end, { desc = "Toggle checkbox" })
