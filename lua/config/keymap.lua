@@ -14,11 +14,9 @@ map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 map("n", "c", '"_c', { desc = "change without yanking" })
 map("n", "C", '"_C', { desc = "change without yanking" })
-map("i", "<C-o>", "<C-x><C-o>", {desc="Omni completion"})
-map("i", "<C-c>", "<C-x><C-z>", {desc="stop completion"})
+map("i", "<C-o>", "<C-x><C-o>", { desc = "Omni completion" })
+map("i", "<C-c>", "<C-x><C-z>", { desc = "stop completion" })
 
 map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
-
-map("n", "<M-->", "<cmd>term<cr>", { desc = "open terminal" })
 
 map("n", "<leader>x", "<cmd>.lua<cr>", { desc = "execute Lua code in current buffer" })

@@ -5,6 +5,7 @@ require("plugins.lsp")
 require("plugins.conform")
 require("plugins.codecompanion")
 require("plugins.obsidian")
+require("plugins.snacks")
 
 require("config.keymap")
 require("config.options")
