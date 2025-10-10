@@ -8,19 +8,21 @@ require("render-markdown").setup({
   file_types = { "markdown", "codecompanion" },
 })
 
+local default_model = "grok-4-auto"
+
 require("codecompanion").setup({
   strategies = {
     chat = {
       adapter = "aiwave",
-      model = "grok-4-auto",
+      model = default_model,
     },
     inline = {
       adapter = "aiwave",
-      model = "grok-4-auto",
+      model = default_model,
     },
     cmd = {
       adapter = "aiwave",
-      model = "grok-4-auto",
+      model = default_model,
     },
   },
   adapters = {
@@ -39,11 +41,11 @@ require("codecompanion").setup({
               mapping = "parameters",
               type = "enum",
               desc = "ID of the model to use.",
-              default = "grok-4-auto",
+              default = default_model,
               choices = {
-                "grok-4",
+                "grok-4-expert",
                 "grok-4-auto",
-                "gemini-2.0-flash",
+                "gemini-2.5-flash",
                 "gemini-2.5-pro",
                 "claude-sonnet-4-20250514",
                 "gpt-5-high",
