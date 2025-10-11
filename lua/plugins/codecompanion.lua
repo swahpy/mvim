@@ -8,7 +8,7 @@ require("render-markdown").setup({
   file_types = { "markdown", "codecompanion" },
 })
 
-local default_model = "grok-4-auto"
+local default_model = "grok-4-expert"
 
 require("codecompanion").setup({
   strategies = {
@@ -44,8 +44,8 @@ require("codecompanion").setup({
               default = default_model,
               choices = {
                 "grok-4-expert",
-                "grok-4-auto",
                 "gemini-2.5-flash",
+                "grok-4-heavy",
                 "gemini-2.5-pro",
                 "claude-sonnet-4-20250514",
                 "gpt-5-high",
