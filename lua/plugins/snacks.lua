@@ -11,10 +11,11 @@ snacks.setup({
   gitbrowse = { enable = true },
   image = { enable = true },
   input = { enable = true },
+  notifier = { enable = true },
   quickfile = { enable = true },
   rename = { enable = true },
-  scratch = { enable = true },
   scope = { enable = true },
+  scratch = { enable = true },
   terminal = { enable = true },
   words = { enabled = true },
   zen = { enable = true },
@@ -84,3 +85,7 @@ end, { desc = "delete all buffers except the current one" })
 map("n", "<leader>bx", function()
   snacks.bufdelete()
 end, { desc = "delete current buffer" })
+
+map("n", "<leader>sh", function()
+  snacks.notifier.show_history()
+end, { desc = "show notifier history" })
