@@ -6,6 +6,7 @@ require("plugins.conform")
 require("plugins.codecompanion")
 require("plugins.obsidian")
 require("plugins.snacks")
+require("plugins.sidekick")
 
 require("config.keymap")
 require("config.options")

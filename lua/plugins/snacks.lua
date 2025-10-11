@@ -86,6 +86,6 @@ map("n", "<leader>bx", function()
   snacks.bufdelete()
 end, { desc = "delete current buffer" })
 
-map("n", "<leader>sh", function()
+map("n", "<leader>sn", function()
   snacks.notifier.show_history()
 end, { desc = "show notifier history" })

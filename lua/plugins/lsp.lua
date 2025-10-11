@@ -8,6 +8,7 @@ require("mason").setup()
 -- All language servers are expected to be installed with 'mason.vnim'
 vim.lsp.enable({
   "basedpyright",
+  "copilot",
   "emmet_language_server",
   "gopls",
   "lua_ls",
@@ -29,8 +30,9 @@ end, { desc = "toggle lsp inlay hints" })
 
 local on_attach = function(args)
   -- enable mini completion
-  vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
-  local client = vim.lsp.get_client_by_id(args.data.client_id)
+  local bufnr = args.buf
+  local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+  vim.bo[bufnr].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
   local function opts(desc)
     return { buffer = args.buf, desc = "lsp " .. desc }
   end
@@ -46,6 +48,24 @@ local on_attach = function(args)
   -- defer textDocument/hover to basedpyright
   if client ~= nil and client.name == "ruff" then
     client.server_capabilities.hoverProvider = false
+  end
+
+  -- enable lsp-inline-completion to get suggestions from copilot
+  if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+    vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+
+    vim.keymap.set(
+      "i",
+      "<C-F>",
+      vim.lsp.inline_completion.get,
+      { desc = "LSP: accept inline completion", buffer = bufnr }
+    )
+    vim.keymap.set(
+      "i",
+      "<C-G>",
+      vim.lsp.inline_completion.select,
+      { desc = "LSP: switch inline completion", buffer = bufnr }
+    )
   end
 end
 vim.api.nvim_create_autocmd("LspAttach", { callback = on_attach })

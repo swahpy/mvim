@@ -138,9 +138,18 @@ miniclue.setup({
     miniclue.gen_clues.registers(),
     miniclue.gen_clues.windows(),
     miniclue.gen_clues.z(),
-    { mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
-    { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d" },
-    { mode = "n", keys = "<Leader>v", desc = "+MiniVisits" },
+    { mode = "n", keys = "<Leader>a", desc = "+AI | Sidekick" },
+    { mode = "n", keys = "<Leader>b", desc = "+Buffers" },
+    { mode = "n", keys = "<Leader>f", desc = "+MiniPick find" },
+    { mode = "n", keys = "<Leader>g", desc = "+Git" },
+    { mode = "n", keys = "<Leader>i", desc = "+Image" },
+    { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d jump" },
+    { mode = "n", keys = "<Leader>o", desc = "+Obsidian" },
+    { mode = "n", keys = "<Leader>r", desc = "+Rename" },
+    { mode = "n", keys = "<Leader>s", desc = "+Select | Show" },
+    { mode = "n", keys = "<Leader>t", desc = "+Toggle | Trim" },
+    { mode = "n", keys = "<Leader>v", desc = "+MiniVisits visit" },
+    { mode = "n", keys = "<Leader>z", desc = "+Zen | Zoom" },
     { mode = "n", keys = "]h", postkeys = "]" },
     { mode = "n", keys = "]b", postkeys = "]" },
     { mode = "n", keys = "[h", postkeys = "[" },
@@ -192,7 +201,7 @@ misc.setup_termbg_sync()
 -- map("n", "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "zoom in/out buffer" })
 require("mini.move").setup()
 require("mini.notify").setup()
-map("n", "<leader>nh", "<cmd>lua MiniNotify.show_history()<cr>", { desc = "show notification history" })
+map("n", "<leader>sN", "<cmd>lua MiniNotify.show_history()<cr>", { desc = "show notification history" })
 require("mini.icons").setup()
 require("mini.icons").tweak_lsp_kind()
 require("mini.operators").setup()
@@ -365,7 +374,7 @@ local f = function(args)
 end
 vim.api.nvim_create_autocmd(
   "FileType",
-  { pattern = { "mason", "checkhealth", "toggleterm", "markdown" }, callback = f }
+  { pattern = { "mason", "checkhealth", "toggleterm", "markdown", "sidekick_terminal" }, callback = f }
 )
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   desc = "Disable indentscope for certain buftypes",
