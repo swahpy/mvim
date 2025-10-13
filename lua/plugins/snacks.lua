@@ -58,6 +58,7 @@ map({ "n", "i", "t" }, "<M-i>", function()
   snacks.terminal(nil, {
     win = {
       position = "float",
+      border = "single",
     },
   })
 end, { desc = "toggle snacks float terminal" })
