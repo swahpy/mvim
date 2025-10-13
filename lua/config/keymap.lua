@@ -17,7 +17,14 @@ map("n", "C", '"_C', { desc = "change without yanking" })
 map("i", "<C-o>", "<C-x><C-o>", { desc = "Omni completion" })
 map("i", "<C-c>", "<C-x><C-z>", { desc = "stop completion" })
 
-map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
+-- keymaps for quickfix operations
+map("n", "<leader>qo", "<cmd>copen<cr>", { desc = "open quickfix list" })
+map("n", "<leader>qn", "<cmd>cnext<cr>", { desc = "jump to next quickfix item" })
+map("n", "<leader>qp", "<cmd>cprevious<cr>", { desc = "jump to previous quickfix item" })
+map("n", "<leader>qx", "<cmd>cclose<cr>", { desc = "close quickfix list" })
+map("n", "<leader>qc", "<cmd>cexpr []<cr>", { desc = "clear quickfix list" })
+
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 map("n", "<leader>x", "<cmd>.lua<cr>", { desc = "execute Lua code in current buffer" })
 
