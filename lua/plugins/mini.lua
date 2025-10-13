@@ -142,7 +142,6 @@ miniclue.setup({
     { mode = "n", keys = "<Leader>b", desc = "+Buffers" },
     { mode = "n", keys = "<Leader>f", desc = "+MiniPick find" },
     { mode = "n", keys = "<Leader>g", desc = "+Git" },
-    { mode = "n", keys = "<Leader>i", desc = "+Image" },
     { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d jump" },
     { mode = "n", keys = "<Leader>o", desc = "+Obsidian" },
     { mode = "n", keys = "<Leader>r", desc = "+Rename" },

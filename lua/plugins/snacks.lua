@@ -33,7 +33,7 @@ map("n", "<leader>go", function()
   snacks.gitbrowse()
 end, { desc = "open the repo of the active file in the browser (e.g., GitHub)" })
 
-map("n", "<leader>ih", function()
+map("n", "<leader>si", function()
   snacks.image.hover()
 end, { desc = "show the image at the cursor in a floating window" })
 
