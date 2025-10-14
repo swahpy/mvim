@@ -5,6 +5,12 @@ vim.pack.add({
 
 local map = vim.keymap.set
 
+-- An example helper to create a Normal mode mapping
+local nmap = function(lhs, rhs, desc)
+  -- See `:h vim.keymap.set()`
+  vim.keymap.set("n", lhs, rhs, { desc = desc })
+end
+
 local extra = require("mini.extra")
 extra.setup({})
 
@@ -140,19 +146,17 @@ miniclue.setup({
     miniclue.gen_clues.z(),
     { mode = "n", keys = "<Leader>a", desc = "+AI | Sidekick" },
     { mode = "n", keys = "<Leader>b", desc = "+Buffers" },
-    { mode = "n", keys = "<Leader>f", desc = "+MiniPick find" },
+    { mode = "n", keys = "<Leader>f", desc = "+Find" },
     { mode = "n", keys = "<Leader>g", desc = "+Git" },
     { mode = "n", keys = "<Leader>j", desc = "+MiniJump2d jump" },
+    { mode = "n", keys = "<Leader>l", desc = "+Lsp" },
     { mode = "n", keys = "<Leader>o", desc = "+Obsidian" },
+    { mode = "n", keys = "<Leader>q", desc = "+Quickfix" },
     { mode = "n", keys = "<Leader>r", desc = "+Rename" },
-    { mode = "n", keys = "<Leader>s", desc = "+Select | Show" },
+    { mode = "n", keys = "<Leader>s", desc = "+Select | Show | Session" },
     { mode = "n", keys = "<Leader>t", desc = "+Toggle | Trim" },
     { mode = "n", keys = "<Leader>v", desc = "+MiniVisits visit" },
     { mode = "n", keys = "<Leader>z", desc = "+Zen | Zoom" },
-    { mode = "n", keys = "]h", postkeys = "]" },
-    { mode = "n", keys = "]b", postkeys = "]" },
-    { mode = "n", keys = "[h", postkeys = "[" },
-    { mode = "n", keys = "[b", postkeys = "[" },
     miniclue.gen_clues.windows({
       submode_move = true,
       submode_navigate = true,
@@ -166,29 +170,36 @@ require("mini.align").setup()
 require("mini.bracketed").setup()
 local bufremove = require("mini.bufremove")
 bufremove.setup()
-map("n", "<leader>,", function()
+nmap("<leader>,", function()
   bufremove.unshow_in_window()
-end, { desc = "switch between recent two buffers" })
-map("n", "<leader>bb", function()
+end, "switch between recent two buffers")
+nmap("<leader>bb", function()
   bufremove.unshow_in_window()
-end, { desc = "switch between recent two buffers" })
-map("n", "<leader>bd", function()
+end, "switch between recent two buffers")
+nmap("<leader>bd", function()
   bufremove.delete()
-end, { desc = "delete current buffer" })
-map("n", "<leader>bw", function()
+end, "delete current buffer")
+nmap("<leader>bw", function()
   bufremove.wipeout()
-end, { desc = "wipeout current buffer" })
+end, "wipeout current buffer")
 require("mini.cursorword").setup()
 require("mini.diff").setup({ view = { style = "sign" } })
-map("n", "<leader>to", "<cmd>lua MiniDiff.toggle_overlay()<cr>", { desc = "toggle mini.diff overlay" })
+nmap("<leader>to", "<cmd>lua MiniDiff.toggle_overlay()<cr>", "toggle mini.diff overlay")
 local git = require("mini.git")
 git.setup()
-map(
-  "n",
-  "<leader>gs",
-  "<cmd>lua MiniGit.show_at_cursor()<cr>",
-  { desc = "shows Git related data depending on context" }
-)
+nmap("<leader>gA", "<Cmd>Git diff --cached<CR>", "Added diff")
+nmap("<leader>ga", "<Cmd>Git diff --cached -- %<CR>", "Added diff buffer")
+nmap("<leader>gc", "<Cmd>Git commit<CR>", "Commit")
+nmap("<leader>gC", "<Cmd>Git commit --amend<CR>", "Commit amend")
+nmap("<leader>gD", "<Cmd>Git diff<CR>", "Diff")
+nmap("<leader>gd", "<Cmd>Git diff -- %<CR>", "Diff buffer")
+local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
+local git_log_buf_cmd = git_log_cmd .. " --follow -- %"
+nmap("<leader>gL", "<Cmd>" .. git_log_cmd .. "<CR>", "Log")
+nmap("<leader>gl", "<Cmd>" .. git_log_buf_cmd .. "<CR>", "Log buffer")
+nmap("<leader>go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
+nmap("<leader>gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
+
 local hipatterns = require("mini.hipatterns")
 hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
 require("mini.jump").setup()
@@ -200,7 +211,7 @@ misc.setup_termbg_sync()
 -- map("n", "<leader>z", "<cmd>lua MiniMisc.zoom()<cr>", { desc = "zoom in/out buffer" })
 require("mini.move").setup()
 require("mini.notify").setup()
-map("n", "<leader>sN", "<cmd>lua MiniNotify.show_history()<cr>", { desc = "show notification history" })
+nmap("<leader>sN", "<cmd>lua MiniNotify.show_history()<cr>", "[Show] notify (mini)")
 require("mini.icons").setup()
 require("mini.icons").tweak_lsp_kind()
 require("mini.operators").setup()
@@ -208,7 +219,7 @@ require("mini.pairs").setup({ modes = { command = true, terminal = true } })
 -- disable mini.pairs for markdown files
 -- so that no extra ]s being inserted in links
 local f = function(args)
-  vim.keymap.set("i", "[", "[", { buffer = args.buf })
+  map("i", "[", "[", { buffer = args.buf })
 end
 vim.api.nvim_create_autocmd("Filetype", { pattern = "markdown", callback = f })
 require("mini.splitjoin").setup()
@@ -216,8 +227,6 @@ require("mini.statusline").setup()
 require("mini.surround").setup({ n_lines = 500, respect_selection_type = true, search_method = "cover_or_next" })
 require("mini.tabline").setup()
 require("mini.visits").setup()
-map("n", "<leader>l", "<cmd>lua MiniVisits.add_label()<cr>", { desc = "Add label" })
-map("n", "<leader>L", "<cmd>lua MiniVisits.remove_label()<cr>", { desc = "Remove label" })
 
 --> mini.completion
 local completion = require("mini.completion")
@@ -263,15 +272,15 @@ files.setup({
   },
 })
 -- toggle files
-map("n", "-", function()
+nmap("-", function()
   if not files.close() then
     files.open(vim.api.nvim_buf_get_name(0))
   end
-end, { desc = "open mini files" })
+end, "open mini files")
 -- open preview
-map("n", "<C-p>", function()
+nmap("<C-p>", function()
   files.refresh({ windows = { preview = true, width_preview = 80 } })
-end, { desc = "enable file content preview" })
+end, "enable file content preview")
 -- toggle hidden files
 local show_dotfiles = false
 local filter_show = function(_)
@@ -309,7 +318,7 @@ local map_split = function(buf_id, lhs, direction, close_on_file)
   if close_on_file then
     desc = desc .. " and close"
   end
-  vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+  map("n", lhs, rhs, { buffer = buf_id, desc = desc })
 end
 cmd("User", {
   pattern = "MiniFilesBufferCreate",
@@ -368,7 +377,7 @@ indent.setup({
     indent_at_cursor = false,
   },
 })
-local f = function(args)
+f = function(args)
   vim.b[args.buf].miniindentscope_disable = true
 end
 vim.api.nvim_create_autocmd(
@@ -483,101 +492,58 @@ pick.setup({
   },
   window = { config = win_config },
 })
+nmap("<leader>fe", "<Cmd>Pick explorer<CR>", "explorer")
 -- files
-map("n", "<leader>ff", function()
+nmap("<leader>ff", function()
   pick.builtin.files()
-end, { desc = "pick from files" })
-map("n", "<leader>fo", function()
+end, "pick from files")
+nmap("<leader>fo", function()
   extra.pickers.oldfiles()
-end, { desc = "pick from old files" })
-map("n", "<leader>fp", function()
-  pick.builtin.grep()
-end, { desc = "pick from pattern matches" })
-map("n", "<leader>fg", function()
-  pick.builtin.grep_live()
-end, { desc = "pick from pattern matches with live feedback" })
-map("n", "<leader>fG", '<Cmd>Pick grep pattern="<cword>"<CR>', { desc = "grep current word" })
-map("n", '<leader>f"', function()
+end, "pick from old files")
+nmap("<leader>fg", "<Cmd>Pick grep_live<CR>", "Grep live")
+nmap("<leader>fG", '<Cmd>Pick grep pattern="<cword>"<CR>', "grep current word")
+nmap("<leader>fa", function()
   extra.pickers.registers()
-end, { desc = "pick from registers" })
-map("n", "<leader>fm", function()
-  extra.pickers.marks()
-end, { desc = "pick from marks" })
+end, "pick from registers")
+nmap("<leader>fm", '<Cmd>Pick git_hunks path="%"<CR>', "modified hunks (buf)")
 -- neovim builtin
-map("n", "<leader>fh", function()
-  pick.builtin.help()
-end, { desc = "pick from help tags" })
-map("n", "<leader>fc", function()
-  extra.pickers.commands()
-end, { desc = "pick from neovim commands" })
+nmap("<leader>fh", "<Cmd>Pick help<CR>", "help tags")
+nmap("<leader>fH", "<Cmd>Pick hl_groups<CR>", "highlight groups")
+nmap("<leader>fc", "<Cmd>Pick git_commits<CR>", "commits (all)")
+nmap("<leader>fC", "<Cmd>Pick git_commits path='%'<CR>", "commits (buf)")
 -- buffer
-map("n", "<leader>fb", function()
+nmap("<leader>fb", function()
   pick.builtin.buffers()
-end, { desc = "pick from buffers" })
-map("n", "<leader>fl", function()
-  extra.pickers.buf_lines({ scope = "current" })
-end, { desc = "pick from buffer lines" })
-map("n", "<leader>fk", function()
+end, "buffers")
+nmap("<leader>fL", '<Cmd>Pick buf_lines scope="all"<CR>', "Lines (all)")
+nmap("<leader>fl", '<Cmd>Pick buf_lines scope="current"<CR>', "Lines (buf)")
+nmap("<leader>fk", function()
   extra.pickers.keymaps()
-end, { desc = "pick from keymaps" })
-map("n", "<leader>fT", function()
+end, "keymaps")
+nmap("<leader>ft", function()
   extra.pickers.colorschemes()
-end, { desc = "pick from colorschemes" })
-map("n", "<leader>fr", function()
-  pick.builtin.resume()
-end, { desc = "pick from latest pickers" })
--- git
-map("n", "<leader>fC", function()
-  extra.pickers.git_commits()
-end, { desc = "pick from git commits" })
-map("n", "<leader>fH", function()
-  extra.pickers.git_hunks()
-end, { desc = "pick from git hunks" })
+end, "colorschemes")
+nmap("<leader>fr", "<Cmd>Pick resume<CR>", "resume")
 -- lsp
-map("n", "<leader>fR", function()
-  extra.pickers.lsp({ scope = "references" })
-end, { desc = "pick from lsp references" })
-map("n", "<leader>ft", function()
+nmap("<leader>fR", '<Cmd>Pick lsp scope="references"<CR>', "references (lsp)")
+nmap("<leader>fT", function()
   extra.pickers.lsp({ scope = "type_definition" })
-end, { desc = "pick from lsp type_definition" })
-map("n", "<leader>fw", function()
-  extra.pickers.lsp({ scope = "workspace_symbol" })
-end, { desc = "pick from lsp workspace_symbol" })
-map("n", "<leader>fi", function()
+end, "type definition (lsp)")
+nmap("<leader>fw", '<Cmd>Pick lsp scope="workspace_symbol"<CR>', "symbols workspace")
+nmap("<leader>fi", function()
   extra.pickers.lsp({ scope = "implementation" })
-end, { desc = "pick from lsp implementation" })
-map("n", "<leader>fd", '<Cmd>Pick diagnostic scope="current"<CR>', { desc = "diagnostic buffer" })
-map("n", "<leader>fD", '<Cmd>Pick diagnostic scope="all"<CR>', { desc = "diagnostic workspace" })
-map("n", "<leader>fs", function()
-  extra.pickers.lsp({ scope = "document_symbol" })
-end, { desc = "pick from lsp document_symbol" })
+end, "implementation (lsp)")
+nmap("<leader>fd", '<Cmd>Pick diagnostic scope="current"<CR>', "diagnostic buffer")
+nmap("<leader>fD", '<Cmd>Pick diagnostic scope="all"<CR>', "diagnostic workspace")
+nmap("<leader>fs", '<Cmd>Pick lsp scope="document_symbol"<CR>', "symbols document")
 -- visits
-map("n", "<leader>vr", function()
-  extra.pickers.visit_paths({ recency_weight = 1 })
-end, { desc = "pick from recent cwd visit_paths" })
-map("n", "<leader>vR", function()
-  extra.pickers.visit_paths({ recency_weight = 1, cwd = "" })
-end, { desc = "pick from recent global visit_paths" })
-map("n", "<leader>vf", function()
-  extra.pickers.visit_paths({ recency_weight = 0 })
-end, { desc = "pick from frequent cwd visit_paths" })
-map("n", "<leader>vF", function()
-  extra.pickers.visit_paths({ recency_weight = 0, cwd = "" })
-end, { desc = "pick from frequent global visit_paths" })
-map("n", "<leader>vc", function()
-  extra.pickers.visit_paths({ recency_weight = 0.5 })
-end, { desc = "pick from frecent cwd visit_paths" })
-map("n", "<leader>vC", function()
-  extra.pickers.visit_paths({ recency_weight = 0.5, cwd = "" })
-end, { desc = "pick from frecent global visit_paths" })
-map("n", "<leader>vl", function()
-  extra.pickers.visit_labels({})
-end, { desc = "pick from cwd labels" })
-map("n", "<leader>vL", function()
-  extra.pickers.visit_labels({ cwd = "" })
-end, { desc = "pick from global labels" })
-map("n", "<leader>f/", '<Cmd>Pick history scope="/"<CR>', { desc = '"/" history' })
-map("n", "<leader>f:", '<Cmd>Pick history scope=":"<CR>', { desc = '":" history' })
+nmap("<leader>fP", '<Cmd>Pick visit_paths cwd=""<CR>', "visit paths (all)")
+nmap("<leader>fp", "<Cmd>Pick visit_paths<CR>", "visit paths (buf)")
+nmap("<leader>fv", "<Cmd>Pick visit_labels cwd=''<CR>", "visit label (all)")
+nmap("<leader>va", "<Cmd>lua MiniVisits.add_label()<CR>", "add visit label")
+nmap("<leader>vd", "<Cmd>lua MiniVisits.remove_label()<CR>", "remove visit label")
+nmap("<leader>f/", '<Cmd>Pick history scope="/"<CR>', '"/" history')
+nmap("<leader>f;", '<Cmd>Pick history scope=":"<CR>', '":" history')
 
 --> mini.sessions
 local sessions = require("mini.sessions")
@@ -585,9 +551,12 @@ sessions.setup({
   autoread = true,
   verbose = { read = true },
 })
-map("n", "<leader>ss", function()
-  sessions.select()
-end, { desc = "select session" })
+local session_new = 'MiniSessions.write(vim.fn.input("Session name: "))'
+
+nmap("<leader>sd", '<Cmd>lua MiniSessions.select("delete")<CR>', "[Session] Delete")
+nmap("<leader>sc", "<Cmd>lua " .. session_new .. "<CR>", "[Session] New")
+nmap("<leader>ss", '<Cmd>lua MiniSessions.select("read")<CR>', "[Session] Select")
+nmap("<leader>sw", "<Cmd>lua MiniSessions.write()<CR>", "[Session] Write")
 
 --> mini.snippets
 local snippets = require("mini.snippets")
@@ -619,6 +588,6 @@ vim.api.nvim_create_autocmd("User", opts)
 local trailspace = require("mini.trailspace")
 trailspace.setup()
 cmd = "<cmd>lua MiniTrailspace.trim()<cr>"
-map("n", "<leader>ts", cmd, { desc = "Trim all trailing whitespaces" })
+nmap("<leader>ts", cmd, "Trim all trailing whitespaces")
 cmd = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
-map("n", "<leader>tl", cmd, { desc = "Trim all trailing empty lines" })
+nmap("<leader>tl", cmd, "Trim all trailing empty lines")

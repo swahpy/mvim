@@ -40,5 +40,19 @@ map("n", "<leader>qq", "<cmd>qa<cr>", "Quit All")
 
 map("n", "<leader>x", "<cmd>.lua<cr>", "execute Lua code in current buffer")
 
+local formatting_cmd = '<Cmd>lua require("conform").format({lsp_fallback=true})<CR>'
+
+map("n", "<leader>la", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Actions")
+map("n", "<leader>ld", "<Cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostic popup")
+map("n", "<leader>lf", formatting_cmd, "Format")
+map("n", "<leader>li", "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Implementation")
+map("n", "<leader>lh", "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover")
+map("n", "<leader>lr", "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename")
+map("n", "<leader>lR", "<Cmd>lua vim.lsp.buf.references()<CR>", "References")
+map("n", "<leader>ls", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Source definition")
+map("n", "<leader>lt", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition")
+
+vim.keymap.set("x", "lf", formatting_cmd, { desc = "Format selection" })
+
 -- command abbreviations
 vim.cmd([[cab vpu lua vim.pack.update()]])

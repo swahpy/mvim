@@ -35,7 +35,7 @@ end, { desc = "open the repo of the active file in the browser (e.g., GitHub)" }
 
 map("n", "<leader>si", function()
   snacks.image.hover()
-end, { desc = "show the image at the cursor in a floating window" })
+end, { desc = "[Show] image" })
 
 map("n", "<leader>;", function()
   snacks.input.input({}, function(values)
@@ -89,4 +89,4 @@ end, { desc = "delete current buffer" })
 
 map("n", "<leader>sn", function()
   snacks.notifier.show_history()
-end, { desc = "show notifier history" })
+end, { desc = "[Show] notify (snacks)" })
