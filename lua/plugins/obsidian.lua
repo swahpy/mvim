@@ -2,8 +2,34 @@ vim.pack.add({
   "https://github.com/obsidian-nvim/obsidian.nvim",
 })
 
+-- Helper function to get the current datetime in ISO 8601 format
+local function get_current_datetime_string()
+  return os.date("%Y-%m-%d %H:%M:%S") -- Example: 2025-10-14 10:30:00
+end
+
 require("obsidian").setup({
   legacy_commands = false,
+  frontmatter = {
+    enabled = true,
+    func = function(note)
+      local now = get_current_datetime_string()
+      local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+      -- Preserve existing metadata fields first
+      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+        for k, v in pairs(note.metadata) do
+          out[k] = v
+        end
+      end
+      -- Set 'created' only if it doesn't exist
+      if out.created == nil then
+        out.created = now
+      end
+      -- Always update 'updated'
+      out.updated = now
+      return out
+    end,
+    sort = { "id", "aliases", "tags", "created", "updated" },
+  },
   notes_subdir = "notes",
   note_id_func = function(title)
     local suffix = ""
@@ -56,3 +82,4 @@ map({ "n", "v" }, "<leader>on", "<cmd>Obsidian new<cr>", { desc = "Create a new 
 map({ "n", "v" }, "<leader>ot", "<cmd>Obsidian today<cr>", { desc = "Create or Open today daily-note" })
 map({ "n", "v" }, "<leader>oy", "<cmd>Obsidian yesterday<cr>", { desc = "Create or Open yesterday daily-note" })
 map({ "n", "v" }, "<leader>oT", "<cmd>Obsidian tomorrow<cr>", { desc = "Create or Open tomorrow daily-note" })
+map({ "n", "v" }, "<leader>os", "<cmd>Obsidian search<cr>", { desc = "Search for notes in your vault" })
