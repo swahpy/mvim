@@ -21,6 +21,7 @@ snacks.setup({
 })
 
 snacks.dim()
+snacks.toggle.dim():map("<leader>td")
 
 local map = vim.keymap.set
 

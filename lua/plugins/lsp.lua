@@ -26,7 +26,7 @@ map("n", "<leader>ti", function()
   else
     vim.lsp.inlay_hint.enable(true)
   end
-end, { desc = "toggle lsp inlay hints" })
+end, { desc = "[Toggle] inlay_hint" })
 
 local on_attach = function(args)
   -- enable mini completion
