@@ -394,10 +394,10 @@ indent.setup({
 f = function(args)
   vim.b[args.buf].miniindentscope_disable = true
 end
-vim.api.nvim_create_autocmd(
-  "FileType",
-  { pattern = { "mason", "checkhealth", "toggleterm", "markdown", "sidekick_terminal" }, callback = f }
-)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "mason", "checkhealth", "toggleterm", "markdown", "sidekick_terminal", "snacks_terminal" },
+  callback = f,
+})
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   desc = "Disable indentscope for certain buftypes",
   callback = function()
