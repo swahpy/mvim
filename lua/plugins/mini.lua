@@ -617,6 +617,6 @@ vim.api.nvim_create_autocmd("User", opts)
 local trailspace = require("mini.trailspace")
 trailspace.setup()
 cmd = "<cmd>lua MiniTrailspace.trim()<cr>"
-nmap("<leader>ts", cmd, "[Trim] trailing whitespace")
+nmap("<leader>ts", cmd, "[Trim] whitespace")
 cmd = "<Cmd>lua MiniTrailspace.trim_last_lines()<CR>"
-nmap("<leader>tl", cmd, "[Trim] trailing empty lines")
+nmap("<leader>tl", cmd, "[Trim] empty lines")

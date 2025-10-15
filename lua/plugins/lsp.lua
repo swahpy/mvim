@@ -20,14 +20,6 @@ vim.lsp.enable({
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lsp
 local map = vim.keymap.set
 
-map("n", "<leader>ti", function()
-  if vim.lsp.inlay_hint.is_enabled() then
-    vim.lsp.inlay_hint.enable(false)
-  else
-    vim.lsp.inlay_hint.enable(true)
-  end
-end, { desc = "[Toggle] inlay_hint" })
-
 local on_attach = function(args)
   -- enable mini completion
   local bufnr = args.buf

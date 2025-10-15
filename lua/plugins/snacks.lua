@@ -22,6 +22,9 @@ snacks.setup({
 
 snacks.dim()
 snacks.toggle.dim():map("<leader>td")
+snacks.toggle.inlay_hints():map("<leader>ti")
+snacks.toggle.zen():map("<leader>tz")
+snacks.toggle.zoom():map("<leader>tm")
 
 local map = vim.keymap.set
 
