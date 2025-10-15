@@ -74,12 +74,22 @@ require("obsidian").setup({
     time_format = "%H:%M",
     substitutions = {},
   },
+  checkbox = {
+    order = { " ", "x" },
+  },
 })
 
 local map = vim.keymap.set
 
-map({ "n", "v" }, "<leader>on", "<cmd>Obsidian new<cr>", { desc = "Create a new note" })
-map({ "n", "v" }, "<leader>ot", "<cmd>Obsidian today<cr>", { desc = "Create or Open today daily-note" })
-map({ "n", "v" }, "<leader>oy", "<cmd>Obsidian yesterday<cr>", { desc = "Create or Open yesterday daily-note" })
-map({ "n", "v" }, "<leader>oT", "<cmd>Obsidian tomorrow<cr>", { desc = "Create or Open tomorrow daily-note" })
-map({ "n", "v" }, "<leader>os", "<cmd>Obsidian search<cr>", { desc = "Search for notes in your vault" })
+map("n", "<leader>oS", "<cmd>Obsidian quick_switch<cr>", { desc = "Search notes (name)" })
+map("n", "<leader>oT", "<cmd>Obsidian tomorrow<cr>", { desc = "Create or Open tomorrow" })
+map("n", "<leader>oa", "<cmd>Obsidian tags<cr>", { desc = "Tags list" })
+map("n", "<leader>ob", "<cmd>Obsidian backlinks<cr>", { desc = "Backlinks" })
+map("n", "<leader>of", "<cmd>Obsidian follow_link<cr>", { desc = "Follow link" })
+map("n", "<leader>ol", "<cmd>Obsidian links<cr>", { desc = "Links list" })
+map("n", "<leader>on", "<cmd>Obsidian new<cr>", { desc = "Create a new note" })
+map("n", "<leader>op", "<cmd>Obsidian paste_img<cr>", { desc = "Paste image" })
+map("n", "<leader>or", "<cmd>Obsidian rename<cr>", { desc = "Rename note" })
+map("n", "<leader>os", "<cmd>Obsidian search<cr>", { desc = "Search notes (all)" })
+map("n", "<leader>ot", "<cmd>Obsidian today<cr>", { desc = "Create or Open today" })
+map("n", "<leader>oy", "<cmd>Obsidian yesterday<cr>", { desc = "Create or Open yesterday" })
