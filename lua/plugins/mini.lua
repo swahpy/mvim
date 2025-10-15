@@ -200,7 +200,7 @@ nmap("<leader>go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 nmap("<leader>gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
 
 local hipatterns = require("mini.hipatterns")
-local hi_words = MiniExtra.gen_highlighter.words
+local hi_words = extra.gen_highlighter.words
 hipatterns.setup({
   highlighters = {
     -- Highlight a fixed set of common words. Will be highlighted in any place,
