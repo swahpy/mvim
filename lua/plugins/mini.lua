@@ -200,15 +200,16 @@ nmap("<leader>go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 nmap("<leader>gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
 
 local hipatterns = require("mini.hipatterns")
-local hi_words = extra.gen_highlighter.words
+-- local hi_words = extra.gen_highlighter.words
+-- todo = hi_words({ "#()TODO()", "#()Todo()", "#()todo()" }, "MiniHipatternsTodo"),
 hipatterns.setup({
   highlighters = {
     -- Highlight a fixed set of common words. Will be highlighted in any place,
     -- not like "only in comments".
-    fixme = hi_words({ "FIXME", "Fixme", "fixme" }, "MiniHipatternsFixme"),
-    hack = hi_words({ "HACK", "Hack", "hack" }, "MiniHipatternsHack"),
-    todo = hi_words({ "TODO", "Todo", "todo" }, "MiniHipatternsTodo"),
-    note = hi_words({ "NOTE", "Note", "note" }, "MiniHipatternsNote"),
+    fixme = { pattern = "#()fixme()", group = "MiniHipatternsFixme" },
+    hack = { pattern = "#()hac()", group = "MiniHipatternsHack" },
+    todo = { pattern = "#()todo()", group = "MiniHipatternsTodo" },
+    note = { pattern = "#()note()", group = "MiniHipatternsNote" },
 
     -- Highlight hex color string (#aabbcc) with that color as a background
     hex_color = hipatterns.gen_highlighter.hex_color(),
