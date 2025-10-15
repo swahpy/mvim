@@ -89,8 +89,7 @@ animate.setup({
 -- shoule put before all keymaps using leader key.
 require("mini.basics").setup({
   options = {
-    extra_ui = true,
-    win_borders = "double",
+    win_borders = "single",
   },
   mappings = {
     windows = true,
@@ -201,7 +200,20 @@ nmap("<leader>go", "<Cmd>lua MiniDiff.toggle_overlay()<CR>", "Toggle overlay")
 nmap("<leader>gs", "<Cmd>lua MiniGit.show_at_cursor()<CR>", "Show at cursor")
 
 local hipatterns = require("mini.hipatterns")
-hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
+local hi_words = MiniExtra.gen_highlighter.words
+hipatterns.setup({
+  highlighters = {
+    -- Highlight a fixed set of common words. Will be highlighted in any place,
+    -- not like "only in comments".
+    fixme = hi_words({ "FIXME", "Fixme", "fixme" }, "MiniHipatternsFixme"),
+    hack = hi_words({ "HACK", "Hack", "hack" }, "MiniHipatternsHack"),
+    todo = hi_words({ "TODO", "Todo", "todo" }, "MiniHipatternsTodo"),
+    note = hi_words({ "NOTE", "Note", "note" }, "MiniHipatternsNote"),
+
+    -- Highlight hex color string (#aabbcc) with that color as a background
+    hex_color = hipatterns.gen_highlighter.hex_color(),
+  },
+})
 require("mini.jump").setup()
 local misc = require("mini.misc")
 misc.setup()
@@ -212,8 +224,10 @@ misc.setup_termbg_sync()
 require("mini.move").setup()
 require("mini.notify").setup()
 nmap("<leader>sN", "<cmd>lua MiniNotify.show_history()<cr>", "[Show] notify (mini)")
-require("mini.icons").setup()
-require("mini.icons").tweak_lsp_kind()
+local icons = require("mini.icons")
+icons.setup()
+icons.mock_nvim_web_devicons()
+icons.tweak_lsp_kind()
 require("mini.operators").setup()
 require("mini.pairs").setup({ modes = { command = true, terminal = true } })
 -- disable mini.pairs for markdown files
@@ -536,14 +550,29 @@ end, "implementation (lsp)")
 nmap("<leader>fd", '<Cmd>Pick diagnostic scope="current"<CR>', "diagnostic buffer")
 nmap("<leader>fD", '<Cmd>Pick diagnostic scope="all"<CR>', "diagnostic workspace")
 nmap("<leader>fs", '<Cmd>Pick lsp scope="document_symbol"<CR>', "symbols document")
+nmap("<leader>f/", '<Cmd>Pick history scope="/"<CR>', '"/" history')
+nmap("<leader>f;", '<Cmd>Pick history scope=":"<CR>', '":" history')
 -- visits
 nmap("<leader>fP", '<Cmd>Pick visit_paths cwd=""<CR>', "visit paths (all)")
 nmap("<leader>fp", "<Cmd>Pick visit_paths<CR>", "visit paths (buf)")
 nmap("<leader>fv", "<Cmd>Pick visit_labels cwd=''<CR>", "visit label (all)")
 nmap("<leader>va", "<Cmd>lua MiniVisits.add_label()<CR>", "add visit label")
 nmap("<leader>vd", "<Cmd>lua MiniVisits.remove_label()<CR>", "remove visit label")
-nmap("<leader>f/", '<Cmd>Pick history scope="/"<CR>', '"/" history')
-nmap("<leader>f;", '<Cmd>Pick history scope=":"<CR>', '":" history')
+local make_select_path = function(select_global, recency_weight)
+  local visits = require("mini.visits")
+  local sort = visits.gen_sort.default({ recency_weight = recency_weight })
+  local select_opts = { sort = sort }
+  return function()
+    local cwd = select_global and "" or vim.fn.getcwd()
+    visits.select_path(cwd, select_opts)
+  end
+end
+nmap("<Leader>vr", function()
+  make_select_path(true, 1)()
+end, "Select recent (all)")
+nmap("<Leader>vR", function()
+  make_select_path(false, 1)()
+end, "Select recent (cwd)")
 
 --> mini.sessions
 local sessions = require("mini.sessions")

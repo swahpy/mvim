@@ -52,7 +52,7 @@ map("n", "<leader>lR", "<Cmd>lua vim.lsp.buf.references()<CR>", "References")
 map("n", "<leader>ls", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Source definition")
 map("n", "<leader>lt", "<Cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition")
 
-vim.keymap.set("x", "lf", formatting_cmd, { desc = "Format selection" })
+vim.keymap.set("x", "<leader>lf", formatting_cmd, { desc = "Format selection" })
 
 -- command abbreviations
 vim.cmd([[cab vpu lua vim.pack.update()]])

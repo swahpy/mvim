@@ -6,7 +6,6 @@ local snacks = require("snacks")
 
 snacks.setup({
   bigfile = { enabled = true },
-  dim = { scope = { min_size = 1 } },
   git = { enable = true },
   gitbrowse = { enable = true },
   image = { enable = true },
