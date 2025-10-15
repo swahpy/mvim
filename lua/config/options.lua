@@ -24,6 +24,7 @@ o.splitbelow = true -- Horizontal splits will be below
 o.splitkeep = "screen" -- Reduce scroll during window split
 o.splitright = true -- Vertical splits will be to the right
 o.winborder = "single" -- Use border in floating windows
+o.pumborder = "rounded" -- Use border in completion windows
 o.wrap = false -- Don't visually wrap lines (toggle with \w)
 o.cursorlineopt = "screenline,number" -- Show cursor line per screen line
 

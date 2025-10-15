@@ -254,8 +254,8 @@ local process_items = function(items, base)
 end
 completion.setup({
   window = {
-    info = { border = "double" },
-    signature = { border = "double" },
+    info = { border = "rounded" },
+    signature = { border = "rounded" },
   },
   lsp_completion = {
     source_func = "omnifunc",
