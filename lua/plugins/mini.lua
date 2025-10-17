@@ -436,7 +436,7 @@ map(
   { "o", "x", "n" },
   "<leader>jf",
   "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<cr>",
-  { desc = "jump to single single_character" }
+  { desc = "jump to single_character" }
 )
 map({ "o", "x", "n" }, "<leader>jp", function()
   jump2d.start({
