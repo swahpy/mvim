@@ -30,7 +30,7 @@ o.cursorlineopt = "screenline,number" -- Show cursor line per screen line
 
 -- Special UI symbols. More is set via 'mini.basics' later.
 o.fillchars = "eob: ,fold:╌"
-o.listchars = "extends:…,nbsp:␣,precedes:…,tab:> "
+o.listchars = "extends:…,nbsp:␣,precedes:…,tab:  "
 
 -- Folds (see `:h fold-commands`, `:h zM`, `:h zR`, `:h zA`, `:h zj`)
 o.foldlevel = 10 -- Fold nothing by default; set to 0 or 1 to fold
