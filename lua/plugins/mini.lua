@@ -538,6 +538,8 @@ end, "keymaps")
 nmap("<leader>ft", function()
   extra.pickers.colorschemes()
 end, "colorschemes")
+nmap("<leader>fq", "<Cmd>Pick list scope='quickfix'<CR>", "quickfix")
+nmap("<leader>fj", "<Cmd>Pick list scope='jump'<CR>", "jump")
 nmap("<leader>fr", "<Cmd>Pick resume<CR>", "resume")
 -- lsp
 nmap("<leader>fR", '<Cmd>Pick lsp scope="references"<CR>', "references (lsp)")
