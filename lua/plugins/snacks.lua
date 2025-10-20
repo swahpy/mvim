@@ -69,10 +69,10 @@ map({ "n", "i", "t" }, "<M-->", function()
   snacks.terminal()
 end, { desc = "toggle snacks terminal horizontally" })
 
-map({ "n", "t" }, "]]", function()
+map({ "n", "t" }, "<leader>n", function()
   snacks.words.jump(vim.v.count1)
 end, { desc = "next reference" })
-map({ "n", "t" }, "[[", function()
+map({ "n", "t" }, "<leader>p", function()
   snacks.words.jump(-vim.v.count1)
 end, { desc = "previous reference" })
 
