@@ -5,7 +5,7 @@ conform.setup({
   formatters_by_ft = {
     css = { "biome" },
     go = { "goimports", "gofumpt" },
-    html = { "djlint" },
+    html = { "superhtml" },
     javascript = { "biome" },
     json = { "biome" },
     lua = { "stylua" },
