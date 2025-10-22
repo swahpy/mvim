@@ -30,11 +30,34 @@ map("n", "[p", '<Cmd>exe "put! " . v:register<CR>', "Paste Above")
 map("n", "]p", '<Cmd>exe "put "  . v:register<CR>', "Paste Below")
 
 -- keymaps for quickfix operations
-map("n", "<leader>qo", "<cmd>copen<cr>", "open quickfix list")
-map("n", "<leader>qn", "<cmd>cnext<cr>", "jump to next quickfix item")
-map("n", "<leader>qp", "<cmd>cprevious<cr>", "jump to previous quickfix item")
-map("n", "<leader>qx", "<cmd>cclose<cr>", "close quickfix list")
-map("n", "<leader>qc", "<cmd>cexpr []<cr>", "clear quickfix list")
+map("n", "<leader>Q", "<cmd>copen<cr>", "open quickfix list")
+
+-- Create a global table for quickfix utilities to avoid polluting _G
+_G.QuickfixActions = _G.QuickfixActions or {}
+
+-- Define quickfix navigation functions within the global table
+function _G.QuickfixActions.next_item()
+  local qf_win_id = vim.api.nvim_get_current_win()
+  pcall(vim.cmd, "cnext")
+  vim.api.nvim_set_current_win(qf_win_id)
+end
+
+function _G.QuickfixActions.prev_item()
+  local qf_win_id = vim.api.nvim_get_current_win()
+  pcall(vim.cmd, "cprevious")
+  vim.api.nvim_set_current_win(qf_win_id)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf", -- Change 'markdown' to your desired filetype, e.g., 'lua', 'python'
+  callback = function()
+    local bufmap = vim.api.nvim_buf_set_keymap
+    bufmap(0, "n", "j", "<cmd>lua vim.schedule(QuickfixActions.next_item)<cr>", { noremap = true, silent = true })
+    bufmap(0, "n", "k", "<cmd>lua vim.schedule(QuickfixActions.prev_item)<cr>", { noremap = true, silent = true })
+    bufmap(0, "n", "c", "<cmd>cexpr<cr>", { noremap = true, silent = true })
+    bufmap(0, "n", "q", "<cmd>cclose<cr>", { noremap = true, silent = true })
+  end,
+})
 
 map("n", "<leader>qq", "<cmd>qa<cr>", "Quit All")
 
