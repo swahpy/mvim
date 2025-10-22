@@ -85,3 +85,15 @@ if vim.fn.has("nvim-0.12") == 1 then
   vim.keymap.set("c", "<Up>", "<C-u><Up>")
   vim.keymap.set("c", "<Down>", "<C-u><Down>")
 end
+
+-- Neovide =================================================================
+if vim.g.neovide then
+  o.guifont = "Maple Mono NF CN:h18" -- Set font for Neovide
+  vim.g.neovide_input_macos_option_key_is_meta = "both"
+  vim.g.neovide_hide_mouse_when_typing = false
+  vim.g.neovide_show_border = false
+  vim.g.neovide_padding_top = 0
+  vim.g.neovide_padding_bottom = 0
+  vim.g.neovide_padding_right = 0
+  vim.g.neovide_padding_left = 0
+end
