@@ -8,7 +8,7 @@ require("mason").setup()
 -- All language servers are expected to be installed with 'mason.vnim'
 vim.lsp.enable({
   "basedpyright",
-  "copilot",
+  -- "copilot",
   "emmet_language_server",
   "gopls",
   "lua_ls",
@@ -43,22 +43,22 @@ local on_attach = function(args)
   end
 
   -- enable lsp-inline-completion to get suggestions from copilot
-  if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
-    vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-    vim.keymap.set(
-      "i",
-      "<C-F>",
-      vim.lsp.inline_completion.get,
-      { desc = "LSP: accept inline completion", buffer = bufnr }
-    )
-    vim.keymap.set(
-      "i",
-      "<C-G>",
-      vim.lsp.inline_completion.select,
-      { desc = "LSP: switch inline completion", buffer = bufnr }
-    )
-  end
+  -- if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+  --   vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+  --
+  --   vim.keymap.set(
+  --     "i",
+  --     "<C-F>",
+  --     vim.lsp.inline_completion.get,
+  --     { desc = "LSP: accept inline completion", buffer = bufnr }
+  --   )
+  --   vim.keymap.set(
+  --     "i",
+  --     "<C-G>",
+  --     vim.lsp.inline_completion.select,
+  --     { desc = "LSP: switch inline completion", buffer = bufnr }
+  --   )
+  -- end
 end
 vim.api.nvim_create_autocmd("LspAttach", { callback = on_attach })
 
