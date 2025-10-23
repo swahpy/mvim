@@ -3,6 +3,9 @@ vim.pack.add({
 })
 
 require("sidekick").setup({
+  nes = {
+    enabled = false,
+  },
   cli = {
     mux = {
       backend = "tmux",
@@ -66,3 +69,7 @@ end, { desc = "Sidekick Toggle Gemini" })
 map("n", "<leader>aq", function()
   require("sidekick.cli").toggle({ name = "qwen", focus = true })
 end, { desc = "Sidekick Toggle Qwen" })
+
+map("n", "<leader>tn", function()
+  require("sidekick.nes").toggle()
+end, { desc = "Sidekick Toggle NES" })
