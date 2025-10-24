@@ -15,7 +15,7 @@ require("minuet").setup({
       -- accept whole completion
       accept = "<M-f>",
       -- accept one line
-      accept_line = "<M-l>",
+      accept_line = "<M-e>",
       -- accept n lines (prompts for number)
       -- e.g. "A-z 2 CR" will accept 2 lines
       accept_n_lines = "<M-n>",
