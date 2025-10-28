@@ -286,12 +286,18 @@ files.setup({
     permanent_delete = false,
   },
 })
--- toggle files
+-- explorer for current file
 nmap("-", function()
   if not files.close() then
     files.open(vim.api.nvim_buf_get_name(0))
   end
-end, "open mini files")
+end, "explorer for current file")
+-- explorer last state
+nmap("<leader>e", function(...)
+  if not files.close() then
+    files.open(...)
+  end
+end, "explorer last state")
 -- open preview
 nmap("<C-p>", function()
   files.refresh({ windows = { preview = true, width_preview = 80 } })
