@@ -13,6 +13,7 @@ conform.setup({
     python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
     toml = { "taplo" },
     templ = { "djlint" },
+    xml = { "xmllint" },
     yaml = { "yq" },
   },
 })
