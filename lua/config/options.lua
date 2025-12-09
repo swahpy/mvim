@@ -79,12 +79,12 @@ o.iskeyword = "@,48-57,_,192-255,-" -- Treat dash separated words as a word text
 
 o.completeopt = "menuone,noselect,fuzzy,nosort"
 
-if vim.fn.has("nvim-0.12") == 1 then
-  vim.o.completefuzzycollect = "keyword,files,whole_line" -- Use fuzzy matching when collecting candidates
-  require("vim._extui").enable({ enable = true })
-  vim.keymap.set("c", "<Up>", "<C-u><Up>")
-  vim.keymap.set("c", "<Down>", "<C-u><Down>")
-end
+-- if vim.fn.has("nvim-0.12") == 1 then
+--   vim.o.completefuzzycollect = "keyword,files,whole_line" -- Use fuzzy matching when collecting candidates
+--   require("vim._extui").enable({ enable = true })
+--   vim.keymap.set("c", "<Up>", "<C-u><Up>")
+--   vim.keymap.set("c", "<Down>", "<C-u><Down>")
+-- end
 
 -- Neovide =================================================================
 if vim.g.neovide then
