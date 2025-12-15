@@ -164,6 +164,9 @@ miniclue.setup({
   },
 })
 
+--> mini.cmdline
+require("mini.cmdline").setup({})
+
 --> mini one-liners
 require("mini.align").setup()
 require("mini.bracketed").setup()

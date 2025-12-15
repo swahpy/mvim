@@ -79,6 +79,9 @@ o.iskeyword = "@,48-57,_,192-255,-" -- Treat dash separated words as a word text
 
 o.completeopt = "menuone,noselect,fuzzy,nosort"
 
+o.wildmode = "noselect,full"
+o.wildoptions = "pum,fuzzy"
+
 -- if vim.fn.has("nvim-0.12") == 1 then
 --   vim.o.completefuzzycollect = "keyword,files,whole_line" -- Use fuzzy matching when collecting candidates
 --   require("vim._extui").enable({ enable = true })
