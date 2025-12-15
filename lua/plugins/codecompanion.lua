@@ -8,21 +8,18 @@ require("render-markdown").setup({
   file_types = { "markdown", "codecompanion" },
 })
 
-local default_model = "gemini-2.5-flash"
+local default_model = "gemini-3-pro-preview"
 
 require("codecompanion").setup({
-  strategies = {
+  interactions = {
     chat = {
-      adapter = "aiwave",
-      model = default_model,
+      adapter = { name = "aiwave", model = default_model },
     },
     inline = {
-      adapter = "aiwave",
-      model = default_model,
+      adapter = { name = "aiwave", model = default_model },
     },
     cmd = {
-      adapter = "aiwave",
-      model = default_model,
+      adapter = { name = "aiwave", model = default_model },
     },
   },
   adapters = {
@@ -40,17 +37,11 @@ require("codecompanion").setup({
               order = 1,
               mapping = "parameters",
               type = "enum",
-              desc = "ID of the model to use.",
+              desc = "aiwave",
               default = default_model,
               choices = {
-                "grok-4-fast",
-                "grok-4-expert",
-                "grok-4-heavy",
-                "gemini-2.5-flash",
-                "gemini-2.5-pro",
-                "claude-sonnet-4-20250514",
-                "gpt-5-high",
-                "gpt-5-low",
+                "gemini-pro-latest",
+                "gemini-3-pro-preview",
               },
             },
             max_tokens = {
