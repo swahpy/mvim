@@ -1,5 +1,11 @@
 vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
 
+vim.filetype.add({
+  extension = {
+    gohtml = "html",
+  },
+})
+
 local conform = require("conform")
 conform.setup({
   formatters_by_ft = {
@@ -12,7 +18,7 @@ conform.setup({
     markdown = { "prettier" },
     python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
     toml = { "taplo" },
-    templ = { "djlint" },
+    gohtml = { "djlint" },
     xml = { "xmllint" },
     yaml = { "yq" },
   },
